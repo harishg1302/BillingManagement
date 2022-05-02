@@ -1,7 +1,7 @@
-package com.hnm.billing.service;
+package com.hnm.billing.dao;
 
 import com.hnm.billing.model.User;
 
-public interface UserService {
+public interface UserDao {
     User saveUser(User user);
 }
