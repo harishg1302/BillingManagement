@@ -4,78 +4,94 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1234567L;
+	private static final long serialVersionUID = 1234567L;
 
-    private Integer id;
-    private String name;
-    private String mobileNumber;
-    private String email;
-    private String address;
-    private Role role;
-    private boolean status;
-    private String password;
+	private Integer id;
+	private String  name;
+	private String  mobileNumber;
+	private String  email;
+	private String  address;
+	private Role    role;
+	private boolean status;
+	private String  password;
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Integer id) {
 
-    public void setName(String name) {
-        this.name = name;
-    }
+		this.id = id;
+	}
 
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
+	public String getName() {
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
+		return name;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setName(String name) {
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+		this.name = name;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getMobileNumber() {
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+		return mobileNumber;
+	}
 
-    public Role getRole() {
-        return role;
-    }
+	public void setMobileNumber(String mobileNumber) {
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+		this.mobileNumber = mobileNumber;
+	}
 
-    public boolean isStatus() {
-        return status;
-    }
+	public String getEmail() {
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+		return email;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setEmail(String email) {
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+		this.email = email;
+	}
+
+	public String getAddress() {
+
+		return address;
+	}
+
+	public void setAddress(String address) {
+
+		this.address = address;
+	}
+
+	public Role getRole() {
+
+		return role;
+	}
+
+	public void setRole(Role role) {
+
+		this.role = role;
+	}
+
+	public boolean isStatus() {
+
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+
+		this.status = status;
+	}
+
+	public String getPassword() {
+
+		return password;
+	}
+
+	public void setPassword(String password) {
+
+		this.password = password;
+	}
 }
