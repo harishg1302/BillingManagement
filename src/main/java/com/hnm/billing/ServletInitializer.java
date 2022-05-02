@@ -1,4 +1,4 @@
-package com.example.billing;
+package com.hnm.billing;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
