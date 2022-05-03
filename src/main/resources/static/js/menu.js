@@ -2,12 +2,10 @@ $(document).ready(function () {
 	$('#walletDiv').hide();
 	$('#profileDiv').hide();
 	$('#billingDiv').hide();
+	clickOnWalletBtn();
 
 	$('#walletBtn').on('click', function () {
-		$('#walletDiv').show();
-		$('#profileDiv').hide();
-		$('#billingDiv').hide();
-		getWalletBalance();
+		clickOnWalletBtn();
 	});
 	$('#profileBtn').on('click', function () {
 		$('#profileDiv').show();
@@ -22,12 +20,24 @@ $(document).ready(function () {
 	});
 
 	$('#logoutBtn').on('click', function () {
-    		logout();
-    	});
+		logout();
+	});
 
 	$('#addWalletAmountBtn').on('click', function () {
 		updateWalletBalance();
 	});
+
+	$('#connectionType').on('change', function () {
+		var connectionType = $(this).val();
+		getSuppliersListByType(connectionType);
+	});
+
+	function clickOnWalletBtn() {
+		$('#walletDiv').show();
+		$('#profileDiv').hide();
+		$('#billingDiv').hide();
+		getWalletBalance();
+	}
 
 	function getWalletBalance() {
 
@@ -43,14 +53,14 @@ $(document).ready(function () {
 
 	function logout() {
 
-    		$.ajax({
-    			url: 'logout',
-    			type: "GET",
-    			success: $.proxy(function (data) {
-    			    window.location.href="login"
-    			})
-    		});
-    	};
+		$.ajax({
+			url: 'logout',
+			type: "GET",
+			success: $.proxy(function (data) {
+				window.location.href = "login"
+			})
+		});
+	};
 
 	function updateWalletBalance() {
 
@@ -69,6 +79,42 @@ $(document).ready(function () {
 			success: $.proxy(function (data) {
 				console.log('data: ' + data.balance);
 				$('#currentBalance').text(data.balance)
+			})
+		});
+	};
+
+	function getSuppliersListByType(connectionType) {
+
+		var $suppliers = $('#suppliers');
+		$.ajax({
+			url: 'bill/getSuppliersByConnectionType/' + connectionType,
+			type: "GET",
+			success: $.proxy(function (data) {
+				console.log('data: ' + data.balance);
+				$.each(data, function (i, obj) {
+					$suppliers.append($('<option>', {
+						value: obj.name,
+						text: obj.name
+					}));
+				});
+			})
+		});
+	};
+
+	function saveConnection() {
+
+		var $suppliers = $('#suppliers');
+		$.ajax({
+			url: 'bill/getSuppliersByConnectionType',
+			type: "GET",
+			success: $.proxy(function (data) {
+				console.log('data: ' + data.balance);
+				$.each(data, function (i, obj) {
+					$suppliers.append($('<option>', {
+						value: obj.name,
+						text: obj.name
+					}));
+				});
 			})
 		});
 	};

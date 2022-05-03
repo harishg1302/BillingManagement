@@ -2,12 +2,6 @@
 <html>
 <head>
 	<title>Home</title>
-	<style>
-		.headerDiv {
-			background-color: grey;
-			text-align: center;
-		}
-	</style>
 </head>
 <body>
 
