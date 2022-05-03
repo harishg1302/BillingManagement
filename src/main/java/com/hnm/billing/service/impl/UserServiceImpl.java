@@ -1,6 +1,7 @@
 package com.hnm.billing.service.impl;
 
 import com.hnm.billing.dao.UserDao;
+import com.hnm.billing.dto.LoginDTO;
 import com.hnm.billing.model.User;
 import com.hnm.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +16,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         return userDao.saveUser(user);
+    }
+
+    @Override
+    public User loginUser(LoginDTO loginDTO) {
+        return userDao.loginUser(loginDTO);
     }
 }

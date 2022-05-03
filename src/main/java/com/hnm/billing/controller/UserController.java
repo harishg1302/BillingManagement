@@ -10,24 +10,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Base64;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@GetMapping("/register")
-	public String welcome() {
+    @GetMapping("/register")
+    public String welcome() {
 
-		return "register";
-	}
+        return "register";
+    }
 
-	@PostMapping("/register")
-	public String register(@ModelAttribute("user") User user, Model model) {
-
-		User savedUser = userService.saveUser(user);
-		model.addAttribute("savedUser", savedUser);
-		return "login";
-	}
+    @PostMapping("/register")
+    public String register(@ModelAttribute("user") User user, Model model) {
+        user.setPassword(Base64.getEncoder().encodeToString(user.getPassword().getBytes()));
+        User savedUser = userService.saveUser(user);
+        model.addAttribute("savedUser", savedUser);
+        return "login";
+    }
 }
