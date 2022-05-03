@@ -9,11 +9,24 @@
 		border-radius: 4px;
 		border: 1px solid #7d7474;
 	}
+
+	h6 {
+		margin-bottom: 6px;
+		margin-top: 1px;
+		color: #62626a;
+	}
+
+	.connection {
+		text-align: left;
+		margin-left: -23%;
+	}
 </style>
 <center>
 	<div>
 		<div>
+			<h6><span class="connection">Connection Type</span></h6>
 			<select id="connectionType">
+				<option value="None">Select</option>
 				<option value="DTH">DTH</option>
 				<option value="Electricity">Electricity</option>
 				<option value="Water">Water</option>
@@ -23,10 +36,12 @@
 			</select>
 		</div>
 		<div>
-			<select id="suppliers">
-				<option value="supplier1">supplier1</option>
-				<option value="supplier2">supplier2</option>
-			</select>
+			<h6><span class="connection">Suppliers</span></h6>
+			<select id="suppliers"></select>
+		</div>
+		<div>
+			<h6><span class="connection">Connection Number</span></h6>
+			<input type="text" id="connectionNumber">
 		</div>
 		<div>
 			<button id="addConnection">Add Connection</button>

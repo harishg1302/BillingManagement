@@ -32,6 +32,10 @@ $(document).ready(function () {
 		getSuppliersListByType(connectionType);
 	});
 
+	$('#addConnection').on('click', function () {
+		saveConnection();
+	});
+
 	function clickOnWalletBtn() {
 		$('#walletDiv').show();
 		$('#profileDiv').hide();
@@ -93,7 +97,7 @@ $(document).ready(function () {
 				console.log('data: ' + data.balance);
 				$.each(data, function (i, obj) {
 					$suppliers.append($('<option>', {
-						value: obj.name,
+						value: obj.id,
 						text: obj.name
 					}));
 				});
@@ -103,18 +107,15 @@ $(document).ready(function () {
 
 	function saveConnection() {
 
-		var $suppliers = $('#suppliers');
+		var connectionType = $('#connectionType').val();
+		var connectionNumber = $('#connectionNumber').val();
+		var supplierId = $('#suppliers').val();
+
 		$.ajax({
-			url: 'bill/getSuppliersByConnectionType',
+			url: 'bill/saveConnection?connectionType=' + connectionType + "&connectionNumber=" + connectionNumber + "&supplierId=" + supplierId,
 			type: "GET",
 			success: $.proxy(function (data) {
-				console.log('data: ' + data.balance);
-				$.each(data, function (i, obj) {
-					$suppliers.append($('<option>', {
-						value: obj.name,
-						text: obj.name
-					}));
-				});
+				console.log('data: ' + data);
 			})
 		});
 	};
