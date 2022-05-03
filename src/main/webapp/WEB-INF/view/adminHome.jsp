@@ -4,6 +4,7 @@
 	<title>Home</title>
 </head>
 <body>
+<%@include file="header.jsp" %>
 <%@include file="adminMenu.jsp" %>
 </body>
 </html>

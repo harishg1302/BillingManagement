@@ -62,28 +62,14 @@
 
 <div class="topnav">
 	<a class="active" id="usersBtn" href="#home">Users</a>
-	<%--	<button id="usersBtn">Users BTN</button>--%>
-	<a href="#news">Generate Bill</a>
-	<a href="#contact">Log out</a>
+	<a id="generateBillBtn" href="#bills">Generate Bill</a>
+	<a id="logoutBtn" href="#logOut">Log out</a>
 </div>
-<%--<div class="float-container">--%>
-<%--	<div class="float-child">--%>
-<%--		<div>--%>
-<%--			<button id="usersBtn">Users</button>--%>
-<%--		</div>--%>
-<%--		<div>--%>
-<%--			<button id="generateBillBtn">Generate Bill</button>--%>
-<%--		</div>--%>
-<%--		<div>--%>
-<%--			<button id="logout">Logout</button>--%>
-<%--		</div>--%>
-<%--	</div>--%>
 <div id="allUsersDiv" class="float-child" style="display: none;">
 	<%@include file="allUsers.jsp" %>
 </div>
 <div id="generateBillDiv" class="float-child" style="display: none;">
 	<%@include file="generateBill.jsp" %>
 </div>
-<%--</div>--%>
 </body>
 </html>

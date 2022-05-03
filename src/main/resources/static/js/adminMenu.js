@@ -1,9 +1,24 @@
 $(document).ready(function () {
 	$('#allUsersDiv').hide();
 	$('#generateBillDiv').hide();
-	// $("#datepicker").datepicker();
+	$("#datepicker").datepicker();
+	clickOnUsersBtn();
 
 	$('#usersBtn').on('click', function () {
+		clickOnUsersBtn();
+	});
+	$('#generateBillBtn').on('click', function () {
+		$('#allUsersDiv').hide();
+		$('#generateBillDiv').show();
+	});
+	$('#saveBillBtn').on('click', function () {
+		saveGeneratedBill();
+	});
+	$('#logoutBtn').on('click', function () {
+		logout();
+	});
+
+	function clickOnUsersBtn() {
 		$('#allUsersDiv').show();
 		$('#generateBillDiv').hide();
 		getAllUsers();
@@ -14,14 +29,7 @@ $(document).ready(function () {
 		$(document).on('click', '#closeModal', function () {
 			$('#myModal').hide();
 		});
-	});
-	$('#generateBillBtn').on('click', function () {
-		$('#allUsersDiv').hide();
-		$('#generateBillDiv').show();
-	});
-	$('#saveBillBtn').on('click', function () {
-		saveGeneratedBill();
-	});
+	}
 
 	function getAllUsers() {
 
@@ -81,6 +89,17 @@ $(document).ready(function () {
 			success: $.proxy(function (data) {
 				console.log('data: ' + data);
 
+			})
+		});
+	};
+
+	function logout() {
+
+		$.ajax({
+			url: 'logout',
+			type: "GET",
+			success: $.proxy(function () {
+				window.location.href = "login"
 			})
 		});
 	};
