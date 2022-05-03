@@ -1,16 +1,19 @@
 package com.hnm.billing.controller;
 
-import com.hnm.billing.dto.BillDTO;
 import com.hnm.billing.dto.ConnectionDTO;
-import com.hnm.billing.model.*;
+import com.hnm.billing.model.Bill;
+import com.hnm.billing.model.BillStatus;
+import com.hnm.billing.model.Connection;
 import com.hnm.billing.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/bill")
@@ -25,52 +28,16 @@ public class BillController {
         return billService.generateBill(userId);
     }
 
-    private ConnectionDTO buildConnectionDto(){
-        ConnectionDTO connectionDTO = new ConnectionDTO();
-        connectionDTO.setEmailId("h@g.com");
-        Connection connection = new Connection();
-        connection.setId(1);
-        connection.setUserId(2);
-        connection.setStatus(true);
-        connection.setConnectionType(ConnectionType.DTH);
-        connection.setConnectionNumber("123456789");
-        Supplier supplier = new Supplier();
-        supplier.setId(1);
-        supplier.setName("TATA SKY");
-        supplier.setStatus(true);
-        supplier.setAmount(500);
-        connection.setSupplier(supplier);
-
-        Connection connection1 = new Connection();
-        connection.setId(1);
-        connection.setUserId(2);
-        connection.setStatus(true);
-        connection.setConnectionType(ConnectionType.DTH);
-        connection.setConnectionNumber("123456789");
-        Supplier supplier1 = new Supplier();
-        supplier.setId(1);
-        supplier.setName("TATA SKY");
-        supplier.setStatus(true);
-        supplier.setAmount(500);
-        connection.setSupplier(supplier1);
-
-        List<Connection> connectionList = new ArrayList<>();
-        connectionList.add(connection);
-        connectionList.add(connection1);
-        connectionDTO.setConnectionList(connectionList);
-        return connectionDTO;
-
-    }
-
-    @PostMapping("/saveBill")
+    @GetMapping("/saveBill")
     @ResponseBody
-    public Bill saveBill(@RequestBody BillDTO billDTO){
-        Connection connection = billService.getConnectionById(billDTO.getConnectionId());
+    public Bill saveBill(@RequestParam String userId, @RequestParam String billingDate, @RequestParam String connectionId, @RequestParam String amount) {
+
+        Connection connection = billService.getConnectionById(Integer.valueOf(connectionId));
         Bill bill = new Bill();
-        bill.setUserId(billDTO.getUserId());
+        bill.setUserId(Integer.valueOf(userId));
         bill.setBillStatus(BillStatus.PENDING);
-        bill.setBillingDate(billDTO.getBillingDate());
-        bill.setAmount(billDTO.getAmount());
+        bill.setBillingDate(new Date(billingDate));
+        bill.setAmount(Double.valueOf(amount));
         bill.setConnection(connection);
         return billService.saveBill(bill);
     }

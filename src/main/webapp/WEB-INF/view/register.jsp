@@ -19,9 +19,9 @@
 <h1> Register </h1>
 <form action="register" method="post">
 	<div>
-		<div>
-			<input type="text" name="id" placeholder="Id">
-		</div>
+		<%--		<div>--%>
+		<%--			<input type="text" name="id" placeholder="Id">--%>
+		<%--		</div>--%>
 		<div>
 			<input type="text" name="name" placeholder="User Name">
 		</div>
