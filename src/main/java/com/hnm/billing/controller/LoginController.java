@@ -32,18 +32,19 @@ public class LoginController {
 		User loggedInUser = userService.loginUser(loginDTO);
 		if (loggedInUser != null) {
 			session.setAttribute("user", loggedInUser);
-			if(loggedInUser.getRole().equals(Role.CUSTOMER))
-			return "userHome";
-			else
+			if (loggedInUser.getRole().equals(Role.CUSTOMER)) {
+				return "userHome";
+			} else {
 				return "adminHome";
+			}
 		} else {
 			return "login";
 		}
-
 	}
 
 	@GetMapping("/logout")
-	public String logout(HttpSession session){
+	public String logout(HttpSession session) {
+
 		session.invalidate();
 		return "login";
 	}

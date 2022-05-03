@@ -2,7 +2,10 @@ package com.hnm.billing.dao.impl;
 
 import com.hnm.billing.dao.BillDao;
 import com.hnm.billing.dto.ConnectionDTO;
-import com.hnm.billing.model.*;
+import com.hnm.billing.model.Bill;
+import com.hnm.billing.model.Connection;
+import com.hnm.billing.model.Supplier;
+import com.hnm.billing.model.User;
 import com.hnm.billing.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -23,7 +26,7 @@ public class BillDaoImpl implements BillDao {
 
     public ConnectionDTO generateBill(long userId) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("userId").is(userId));
+        query.addCriteria(Criteria.where("id").is(userId));
         query.addCriteria(Criteria.where("status").is(true));
         User user = mongoTemplate.findOne(query, User.class);
         if (user != null) {

@@ -1,25 +1,41 @@
 $(document).ready(function () {
 	$('#walletDiv').hide();
-	$('#profileDiv').hide();
+	$('#connectionsDiv').hide();
 	$('#billingDiv').hide();
 	clickOnWalletBtn();
 
 	$('#walletBtn').on('click', function () {
+		$('#billingBtn').removeClass('active');
+		$('#connectionsBtn').removeClass('active');
+		$('#logoutBtn').removeClass('active');
+		$('#walletBtn').addClass('active');
 		clickOnWalletBtn();
 	});
-	$('#profileBtn').on('click', function () {
-		$('#profileDiv').show();
+	$('#connectionsBtn').on('click', function () {
+		$('#connectionsDiv').show();
 		$('#walletDiv').hide();
 		$('#billingDiv').hide();
+		$('#connectionsBtn').addClass('active');
+		$('#billingBtn').removeClass('active');
+		$('#logoutBtn').removeClass('active');
+		$('#walletBtn').removeClass('active');
 	});
 
 	$('#billingBtn').on('click', function () {
-		$('#profileDiv').hide();
+		$('#connectionsDiv').hide();
 		$('#walletDiv').hide();
 		$('#billingDiv').show();
+		$('#billingBtn').addClass('active');
+		$('#connectionsBtn').removeClass('active');
+		$('#logoutBtn').removeClass('active');
+		$('#walletBtn').removeClass('active');
 	});
 
 	$('#logoutBtn').on('click', function () {
+		$('#logoutBtn').addClass('active');
+		$('#connectionsBtn').removeClass('active');
+		$('#billingBtn').removeClass('active');
+		$('#walletBtn').removeClass('active');
 		logout();
 	});
 
@@ -36,9 +52,13 @@ $(document).ready(function () {
 		saveConnection();
 	});
 
+	$('#dthBtn').on('click', function () {
+		saveConnection();
+	});
+
 	function clickOnWalletBtn() {
 		$('#walletDiv').show();
-		$('#profileDiv').hide();
+		$('#connectionsDiv').hide();
 		$('#billingDiv').hide();
 		getWalletBalance();
 	}
@@ -49,8 +69,10 @@ $(document).ready(function () {
 			url: 'wallet/getByUserId',
 			type: "GET",
 			success: $.proxy(function (data) {
-				console.log('data: ' + data.balance);
-				$('#currentBalance').text(data.balance)
+				if (data != "" && data != undefined) {
+					console.log('data: ' + data.balance);
+					$('#currentBalance').text(data.balance)
+				}
 			})
 		});
 	};
@@ -81,8 +103,8 @@ $(document).ready(function () {
 			url: 'wallet/updateBalance/' + totalBalance,
 			type: "PUT",
 			success: $.proxy(function (data) {
-				console.log('data: ' + data.balance);
-				$('#currentBalance').text(data.balance)
+				$('#currentBalance').text(data.balance);
+				$('#toBeAddedAmount').val('');
 			})
 		});
 	};
@@ -116,6 +138,42 @@ $(document).ready(function () {
 			type: "GET",
 			success: $.proxy(function (data) {
 				console.log('data: ' + data);
+			})
+		});
+	};
+
+	function getSuppliersListByType(connectionType) {
+
+		var $suppliers = $('#suppliers');
+		$.ajax({
+			url: 'bill/getSuppliersByConnectionType/' + connectionType,
+			type: "GET",
+			success: $.proxy(function (data) {
+				console.log('data: ' + data.balance);
+				$.each(data, function (i, obj) {
+					$suppliers.append($('<option>', {
+						value: obj.id,
+						text: obj.name
+					}));
+				});
+			})
+		});
+	};
+
+	function getSuppliersListByType(connectionType) {
+
+		var $suppliers = $('#suppliers');
+		$.ajax({
+			url: 'bill/getSuppliersByConnectionType/' + connectionType,
+			type: "GET",
+			success: $.proxy(function (data) {
+				console.log('data: ' + data.balance);
+				$.each(data, function (i, obj) {
+					$suppliers.append($('<option>', {
+						value: obj.id,
+						text: obj.name
+					}));
+				});
 			})
 		});
 	};

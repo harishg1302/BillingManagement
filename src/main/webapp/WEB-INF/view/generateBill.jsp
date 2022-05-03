@@ -101,3 +101,13 @@
 		</div>
 	</div>
 </div>
+
+<div id="errorModal" class="modal">
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span id="closeErrorModal" class="close">&times;</span>
+		<div>
+			<span id="errorMessage"></span>
+		</div>
+	</div>
+</div>
