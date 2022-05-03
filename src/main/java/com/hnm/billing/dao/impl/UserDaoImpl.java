@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User loginUser(LoginDTO loginDTO) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("name").is(loginDTO.getEmail()));
+        query.addCriteria(Criteria.where("email").is(loginDTO.getEmail()));
         query.addCriteria(Criteria.where("password").is(loginDTO.getPassword()));
         User user = mongoTemplate.findOne(query, User.class);
         return user;

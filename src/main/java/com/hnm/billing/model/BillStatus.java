@@ -1,13 +1,14 @@
 package com.hnm.billing.model;
 
-public enum Role {
-    CUSTOMER(1, "Customer"),
-    ADMIN(2, "Admin");
+public enum BillStatus {
+    PENDING(1, "Pending"),
+    PAID(2, "Paid"),
+    OVERDUE(3, "Overdue");
 
     private int id;
     private String displayName;
 
-    Role(int id, String displayName) {
+    BillStatus(int id, String displayName) {
         this.id = id;
         this.displayName = displayName;
     }

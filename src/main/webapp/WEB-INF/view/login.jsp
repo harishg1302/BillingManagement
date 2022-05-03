@@ -17,10 +17,10 @@
 </head>
 <body>
 <h1> Login </h1>
-<form action="/login" method="post">
+<form action="login" method="post">
 	<div>
 		<div>
-			<input type="text" name="id" placeholder="User Id">
+			<input type="text" name="email" placeholder="User Id">
 		</div>
 		<div>
 			<input type="password" name="password" placeholder="Password">
