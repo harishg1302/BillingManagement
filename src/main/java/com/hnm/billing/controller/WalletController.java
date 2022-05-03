@@ -27,10 +27,15 @@ public class WalletController {
         }
     }
 
-    @PutMapping("updateBalance")
+    @PutMapping("/updateBalance")
     @ResponseBody
-    public Wallet getWalletWithUpdatedBalance(@ModelAttribute double currentBalance, HttpSession session){
-        return null;
+    public Wallet getWalletWithUpdatedBalance(@ModelAttribute double addAmount, HttpSession session){
+        User currentUser = (User) session.getAttribute("user");
+        if(currentUser != null){
+            return walletService.getWalletWithUpdatedBalance(currentUser.getId(), addAmount);
+        } else {
+            return null;
+        }
     }
 
 }

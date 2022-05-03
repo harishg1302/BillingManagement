@@ -16,4 +16,9 @@ public class WalletServiceImpl implements WalletService {
     public Wallet getWalletByUserId(int userId) {
         return walletDao.getWalletByUserId(userId);
     }
+
+    @Override
+    public Wallet getWalletWithUpdatedBalance(int userId, double addAmount) {
+        return walletDao.getWalletWithUpdatedBalance(userId, addAmount);
+    }
 }
