@@ -2,40 +2,7 @@
 <html>
 <head>
 	<title>Title</title>
-	<style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .topnav {
-      overflow: hidden;
-      background-color: #333;
-    }
-
-    .topnav a {
-      float: left;
-      color: #f2f2f2;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      font-size: 17px;
-    }
-
-    .topnav a:hover {
-      background-color: #ddd;
-      color: black;
-    }
-
-    .topnav a.active {
-      background-color: #04AA6D;
-      color: white;
-    }
-
-    .float-container{
-		margin-top: -22px;
-	}
-	</style>
+	<link href="./css/styles.css" rel="stylesheet">
 	<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="./js/menu.js" type="text/javascript"></script>
 </head>
