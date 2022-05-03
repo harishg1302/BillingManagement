@@ -63,4 +63,10 @@ public class BillController {
         connection.setConnectionNumber(connectionNumber);
         return billService.saveConnection(connection, Long.parseLong(supplierId));
     }
+
+    @GetMapping("/getConnectionsByUserId/{userId}")
+    @ResponseBody
+    public List<Connection> getConnectionsByUserId(@PathVariable long userId){
+        return billService.getConnectionsByUserId(userId);
+    }
 }
