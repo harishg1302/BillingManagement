@@ -21,11 +21,36 @@ $(document).ready(function () {
 		$('#billingDiv').show();
 	});
 
+	$('#addWalletAmountBtn').on('click', function () {
+		updateWalletBalance();
+	});
+
 	function getWalletBalance() {
 
 		$.ajax({
 			url: 'wallet/getByUserId',
 			type: "GET",
+			success: $.proxy(function (data) {
+				console.log('data: ' + data.balance);
+				$('#currentBalance').text(data.balance)
+			})
+		});
+	};
+
+	function updateWalletBalance() {
+
+		var currentBalance = $('#currentBalance').text();
+		var toBeAddedBalance = parseInt($('#toBeAddedAmount').val());
+
+		var totalBalance = 0;
+		if ($.isNumeric(currentBalance)) {
+			totalBalance = parseInt(currentBalance) + toBeAddedBalance;
+		} else {
+			totalBalance = toBeAddedBalance;
+		}
+		$.ajax({
+			url: 'wallet/updateBalance/' + totalBalance,
+			type: "PUT",
 			success: $.proxy(function (data) {
 				console.log('data: ' + data.balance);
 				$('#currentBalance').text(data.balance)

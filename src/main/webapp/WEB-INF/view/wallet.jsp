@@ -3,7 +3,7 @@
 </div>
 <div>
 	<div>
-		<input type="text" id="amount">
-		<input type="submit" value="Add Amount">
+		<input type="text" id="toBeAddedAmount">
+		<button id="addWalletAmountBtn">Add Amount</button>
 	</div>
 </div>
