@@ -42,4 +42,9 @@ public class BillServiceImpl implements BillService {
         return billDao.saveConnection(connection, supplierId);
     }
 
+    @Override
+    public List<Connection> getConnectionsByUserId(long userId) {
+        return billDao.getConnectionsByUserId(userId);
+    }
+
 }

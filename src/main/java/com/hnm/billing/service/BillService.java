@@ -13,4 +13,5 @@ public interface BillService {
     Connection getConnectionById(long connectionId);
     List<Supplier> getSuppliersByConnectionType(String connectionType);
     Connection saveConnection(Connection connection, long supplierId);
+    List<Connection> getConnectionsByUserId(long userId);
 }
