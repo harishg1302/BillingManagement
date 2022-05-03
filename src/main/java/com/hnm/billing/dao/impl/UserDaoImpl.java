@@ -3,6 +3,7 @@ package com.hnm.billing.dao.impl;
 import com.hnm.billing.dao.UserDao;
 import com.hnm.billing.dto.LoginDTO;
 import com.hnm.billing.model.User;
+import com.hnm.billing.model.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -27,6 +28,12 @@ public class UserDaoImpl implements UserDao {
         query.addCriteria(Criteria.where("email").is(loginDTO.getEmail()));
         query.addCriteria(Criteria.where("password").is(loginDTO.getPassword()));
         User user = mongoTemplate.findOne(query, User.class);
+        return user;
+    }
+
+    @Override
+    public User getByEmailId(String emailId) {
+        User user = mongoTemplate.findById(emailId, User.class);
         return user;
     }
 }

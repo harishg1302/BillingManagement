@@ -6,4 +6,5 @@ import com.hnm.billing.model.User;
 public interface UserDao {
     User saveUser(User user);
     User loginUser(LoginDTO loginDTO);
+    User getByEmailId(String emailId);
 }

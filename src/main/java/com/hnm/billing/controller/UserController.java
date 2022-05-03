@@ -5,10 +5,7 @@ import com.hnm.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
 
@@ -31,5 +28,11 @@ public class UserController {
         User savedUser = userService.saveUser(user);
         model.addAttribute("savedUser", savedUser);
         return "login";
+    }
+
+    @GetMapping("/getByEmailId/{emailId}")
+    @ResponseBody
+    public User getByEmailId(@PathVariable("emailId") String emailId){
+        return userService.getByEmailId(emailId);
     }
 }

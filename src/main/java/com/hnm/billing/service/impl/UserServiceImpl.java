@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
     public User loginUser(LoginDTO loginDTO) {
         return userDao.loginUser(loginDTO);
     }
+
+    @Override
+    public User getByEmailId(String emailId) {
+        return userDao.getByEmailId(emailId);
+    }
 }

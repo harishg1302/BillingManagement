@@ -27,9 +27,9 @@ public class WalletController {
         }
     }
 
-    @PutMapping("/updateBalance")
+    @PutMapping("/updateBalance/{amount}")
     @ResponseBody
-    public Wallet getWalletWithUpdatedBalance(@ModelAttribute double addAmount, HttpSession session){
+    public Wallet getWalletWithUpdatedBalance(@PathVariable("amount") double addAmount, HttpSession session){
         User currentUser = (User) session.getAttribute("user");
         if(currentUser != null){
             return walletService.getWalletWithUpdatedBalance(currentUser.getId(), addAmount);

@@ -1,7 +1,6 @@
 package com.hnm.billing.dao.impl;
 
 import com.hnm.billing.dao.WalletDao;
-import com.hnm.billing.model.User;
 import com.hnm.billing.model.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
