@@ -6,7 +6,7 @@ public enum ConnectionType {
     DTH(3, "DTH"),
     GAS(4, "Gas"),
     WATER(5, "Water"),
-    BROADBAND(6, "Broadband(Wifi)");
+    BROADBAND(6, "WiFi");
 
     private int id;
     private String displayName;
