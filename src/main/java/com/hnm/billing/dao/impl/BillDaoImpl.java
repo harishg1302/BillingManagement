@@ -5,6 +5,7 @@ import com.hnm.billing.dto.ConnectionDTO;
 import com.hnm.billing.model.Bill;
 import com.hnm.billing.model.Connection;
 import com.hnm.billing.model.User;
+import com.hnm.billing.model.Wallet;
 import com.hnm.billing.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -43,5 +44,12 @@ public class BillDaoImpl implements BillDao {
     public Bill saveBill(Bill bill) {
         bill.setId(sequenceGeneratorService.generateSequence(Bill.SEQUENCE_NAME));
         return mongoTemplate.save(bill);
+    }
+
+    @Override
+    public Connection getConnectionById(long connectionId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(connectionId));
+        return mongoTemplate.findOne(query, Connection.class);
     }
 }

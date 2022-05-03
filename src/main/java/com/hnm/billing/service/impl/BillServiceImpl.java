@@ -3,6 +3,7 @@ package com.hnm.billing.service.impl;
 import com.hnm.billing.dao.BillDao;
 import com.hnm.billing.dto.ConnectionDTO;
 import com.hnm.billing.model.Bill;
+import com.hnm.billing.model.Connection;
 import com.hnm.billing.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,4 +23,10 @@ public class BillServiceImpl implements BillService {
     public Bill saveBill(Bill bill) {
         return billDao.saveBill(bill);
     }
+
+    @Override
+    public Connection getConnectionById(long connectionId) {
+        return billDao.getConnectionById(connectionId);
+    }
+
 }
