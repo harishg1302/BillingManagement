@@ -4,6 +4,7 @@ import com.hnm.billing.dto.ConnectionDTO;
 import com.hnm.billing.model.Bill;
 import com.hnm.billing.model.BillStatus;
 import com.hnm.billing.model.Connection;
+import com.hnm.billing.model.Supplier;
 import com.hnm.billing.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/bill")
@@ -31,7 +33,6 @@ public class BillController {
     @GetMapping("/saveBill")
     @ResponseBody
     public Bill saveBill(@RequestParam String userId, @RequestParam String billingDate, @RequestParam String connectionId, @RequestParam String amount) {
-
         Connection connection = billService.getConnectionById(Integer.valueOf(connectionId));
         Bill bill = new Bill();
         bill.setUserId(Integer.valueOf(userId));
@@ -40,5 +41,11 @@ public class BillController {
         bill.setAmount(Double.valueOf(amount));
         bill.setConnection(connection);
         return billService.saveBill(bill);
+    }
+
+    @GetMapping("/getSuppliersByConnectionType")
+    @ResponseBody
+    public List<Supplier> getSuppliersByConnectionType(@RequestParam String connectionType){
+       return billService.getSuppliersByConnectionType(connectionType);
     }
 }

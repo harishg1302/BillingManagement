@@ -1,6 +1,7 @@
 package com.hnm.billing.service;
 
 import com.hnm.billing.dto.LoginDTO;
+import com.hnm.billing.model.Supplier;
 import com.hnm.billing.model.User;
 
 import java.util.List;

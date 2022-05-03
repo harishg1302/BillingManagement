@@ -1,6 +1,7 @@
 package com.hnm.billing.controller;
 
 import com.hnm.billing.dto.LoginDTO;
+import com.hnm.billing.model.Role;
 import com.hnm.billing.model.User;
 import com.hnm.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,10 @@ public class LoginController {
 		User loggedInUser = userService.loginUser(loginDTO);
 		if (loggedInUser != null) {
 			session.setAttribute("user", loggedInUser);
+			if(loggedInUser.getRole().equals(Role.CUSTOMER))
 			return "userHome";
+			else
+				return "adminHome";
 		} else {
 			return "login";
 		}

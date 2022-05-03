@@ -2,6 +2,7 @@ package com.hnm.billing.service.impl;
 
 import com.hnm.billing.dao.UserDao;
 import com.hnm.billing.dto.LoginDTO;
+import com.hnm.billing.model.Supplier;
 import com.hnm.billing.model.User;
 import com.hnm.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +35,5 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
+
 }

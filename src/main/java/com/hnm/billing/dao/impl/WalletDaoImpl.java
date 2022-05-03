@@ -32,9 +32,8 @@ public class WalletDaoImpl implements WalletDao {
         query.addCriteria(Criteria.where("userId").is(userId));
         Wallet wallet = mongoTemplate.findOne(query, Wallet.class);
         if(wallet != null) {
-            double totalBalance = wallet.getBalance() + addAmount;
             Update updateBalance = new Update();
-            updateBalance.set("balance", totalBalance);
+            updateBalance.set("balance", addAmount);
             mongoTemplate.updateFirst(query, updateBalance, Wallet.class);
             return mongoTemplate.findOne(query, Wallet.class);
         } else {

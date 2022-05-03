@@ -11,7 +11,7 @@
 		}
 	</style>
 <center><div>
-	<h1><label id="currentAmount">Current Balance: $<span id="currentBalance"></span></label></h1>
+	<h1><label id="currentAmount">Current Balance: $<span id="currentBalance">0</span></label></h1>
 </div>
 <div>
 	<div>

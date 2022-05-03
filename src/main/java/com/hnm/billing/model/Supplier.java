@@ -3,6 +3,8 @@ package com.hnm.billing.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.io.Serializable;
 
@@ -16,6 +18,8 @@ public class Supplier implements Serializable {
     private long id;
     private String name;
     private double amount;
+    @Field(targetType = FieldType.STRING)
+    private ConnectionType connectionType;
     private boolean status;
 
     public long getId() {
@@ -48,5 +52,13 @@ public class Supplier implements Serializable {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public ConnectionType getConnectionType() {
+        return connectionType;
+    }
+
+    public void setConnectionType(ConnectionType connectionType) {
+        this.connectionType = connectionType;
     }
 }
