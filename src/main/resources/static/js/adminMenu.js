@@ -91,7 +91,7 @@ $(document).ready(function () {
 					$.each(connectionsList, function (i, obj) {
 						$modal.find('#connectionId').val(obj.id);
 						$modal.find('#connectionType').append($('<option>', {
-							value: obj.connectionType,
+							value: obj.connectionType.toUpperCase(),
 							text: obj.connectionType
 						}));
 					});

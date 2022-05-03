@@ -8,7 +8,7 @@
 				<option value="ELECTRICITY">Electricity</option>
 				<option value="WATER">Water</option>
 				<option value="MOBILE_RECHARGE">Mobile Recharge</option>
-				<option value="BROADBAND">WiFi</option>
+				<option value="WIFI">WiFi</option>
 				<option value="GAS">Gas</option>
 			</select>
 		</div>

@@ -54,8 +54,10 @@ $(document).ready(function () {
 		saveConnection();
 	});
 
-	$('#dthBtn').on('click', function () {
-		saveConnection();
+	$('.allBillingBtn').on('click', function () {
+		var $currentBtn = $(this);
+		resetResetBillingBtn($currentBtn);
+		getAllBillsByConnectionTypeAndUser($currentBtn.text().toUpperCase());
 	});
 
 	function clickOnWalletBtn() {
@@ -165,8 +167,42 @@ $(document).ready(function () {
 					$connectionsTBody.append("" +
 						"<tr>" +
 						"<td>" + ++i + "<input type='hidden' id='userId' value=" + obj.id + "></td>" +
-						"<td>" + obj.connectionType + "</td><td>" + obj.supplier.name + "</td>" +
+						"<td>" + obj.connectionType + "</td>" +
+						"<td>" + obj.supplier.name + "</td>" +
 						"<td>" + obj.connectionNumber + "</td>" +
+						"</tr>");
+				});
+			})
+		});
+	};
+
+	function resetResetBillingBtn($currentBtn) {
+		$('.allBillingBtn').removeClass('active');
+		$currentBtn.addClass('active');
+		$('#connectionType').val('0');
+		$('#suppliers').val('');
+		$('#connectionNumber').val('');
+	}
+
+	function getAllBillsByConnectionTypeAndUser(connectionType) {
+
+		var $allBillsTBody = $('#allBillsTBody');
+		$allBillsTBody.empty();
+		$.ajax({
+			url: 'bill/getBillsByConnectionType/' + connectionType,
+			type: "GET",
+			success: $.proxy(function (data) {
+				var jsonObject = JSON.stringify(data);
+				$.each(data, function (i, obj) {
+					$allBillsTBody.append("" +
+						"<tr>" +
+						"<td>" + ++i + "<input type='hidden' id='billId' value=" + obj.id + "></td>" +
+						"<td>" + obj.connection.supplier.name + "</td>" +
+						"<td>" + obj.supplier.name + "</td>" +
+						"<td>" + obj.connection.connectionNumber + "</td>" +
+						"<td>" + obj.amount + "</td>" +
+						"<td>" + obj.billStatus + "</td>" +
+						"<td><button id='payBill'>Pay</button></td>" +
 						"</tr>");
 				});
 			})

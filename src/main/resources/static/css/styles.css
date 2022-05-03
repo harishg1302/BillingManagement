@@ -122,6 +122,12 @@ h6 {
 
 button:hover {
 	background-color: #04AA6D;
+	color: #fff;
+}
+
+button.active {
+	background-color: #04AA6D;
+	color: #fff;
 }
 
 .modal {
