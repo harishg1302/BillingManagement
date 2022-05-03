@@ -2,6 +2,7 @@ package com.hnm.billing.dao.impl;
 
 import com.hnm.billing.dao.WalletDao;
 import com.hnm.billing.model.Wallet;
+import com.hnm.billing.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,10 +16,14 @@ public class WalletDaoImpl implements WalletDao {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
     @Override
     public Wallet getWalletByUserId(int userId) {
-        Wallet wallet = mongoTemplate.findById(userId, Wallet.class);
-        return wallet;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        return mongoTemplate.findOne(query, Wallet.class);
     }
 
     @Override
@@ -34,6 +39,7 @@ public class WalletDaoImpl implements WalletDao {
             return mongoTemplate.findOne(query, Wallet.class);
         } else {
             wallet = new Wallet();
+            wallet.setWalletId(sequenceGeneratorService.generateSequence(Wallet.SEQUENCE_NAME));
             wallet.setUserId(userId);
             wallet.setBalance(addAmount);
             return mongoTemplate.save(wallet);

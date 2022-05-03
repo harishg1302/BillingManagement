@@ -28,6 +28,7 @@ public class UserController {
     public String register(@ModelAttribute("user") User user, Model model) {
         user.setPassword(Base64.getEncoder().encodeToString(user.getPassword().getBytes()));
         user.setRole(Role.CUSTOMER);
+        user.setStatus(true);
         User savedUser = userService.saveUser(user);
         model.addAttribute("savedUser", savedUser);
         return "login";

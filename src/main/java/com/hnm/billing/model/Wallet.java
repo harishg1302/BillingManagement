@@ -1,6 +1,7 @@
 package com.hnm.billing.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -9,16 +10,18 @@ import java.io.Serializable;
 public class Wallet implements Serializable {
 
     private static final long serialVersionUID = 123465L;
+    @Transient
+    public static final String SEQUENCE_NAME = "wallet_sequence";
     @Id
-    private int walletId;
+    private long walletId;
     private int userId;
     private double balance;
 
-    public int getWalletId() {
+    public long getWalletId() {
         return walletId;
     }
 
-    public void setWalletId(int walletId) {
+    public void setWalletId(long walletId) {
         this.walletId = walletId;
     }
 
