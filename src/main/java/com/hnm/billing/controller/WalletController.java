@@ -5,9 +5,7 @@ import com.hnm.billing.model.Wallet;
 import com.hnm.billing.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,6 +25,12 @@ public class WalletController {
         } else {
             return null;
         }
+    }
+
+    @PutMapping("updateBalance")
+    @ResponseBody
+    public Wallet getWalletWithUpdatedBalance(@ModelAttribute double currentBalance, HttpSession session){
+        return null;
     }
 
 }

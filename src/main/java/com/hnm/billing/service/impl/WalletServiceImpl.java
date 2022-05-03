@@ -4,7 +4,9 @@ import com.hnm.billing.dao.WalletDao;
 import com.hnm.billing.model.Wallet;
 import com.hnm.billing.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class WalletServiceImpl implements WalletService {
 
     @Autowired
