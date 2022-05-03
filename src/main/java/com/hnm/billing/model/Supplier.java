@@ -19,7 +19,7 @@ public class Supplier implements Serializable {
     private String name;
     private double amount;
     @Field(targetType = FieldType.STRING)
-    private ConnectionType connectionType;
+    private String connectionType;
     private boolean status;
 
     public long getId() {
@@ -54,11 +54,11 @@ public class Supplier implements Serializable {
         this.status = status;
     }
 
-    public ConnectionType getConnectionType() {
+    public String getConnectionType() {
         return connectionType;
     }
 
-    public void setConnectionType(ConnectionType connectionType) {
+    public void setConnectionType(String connectionType) {
         this.connectionType = connectionType;
     }
 }

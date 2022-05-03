@@ -58,7 +58,7 @@ public class BillController {
         User currentUser = (User) session.getAttribute("user");
         Connection connection = new Connection();
         connection.setUserId(currentUser.getId());
-        connection.setConnectionType(ConnectionType.valueOf(connectionType));
+        connection.setConnectionType(ConnectionType.valueOf(connectionType).getDisplayName());
         connection.setStatus(true);
         connection.setConnectionNumber(connectionNumber);
         return billService.saveConnection(connection, Long.parseLong(supplierId));

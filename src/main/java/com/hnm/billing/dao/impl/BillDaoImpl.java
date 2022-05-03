@@ -2,10 +2,7 @@ package com.hnm.billing.dao.impl;
 
 import com.hnm.billing.dao.BillDao;
 import com.hnm.billing.dto.ConnectionDTO;
-import com.hnm.billing.model.Bill;
-import com.hnm.billing.model.Connection;
-import com.hnm.billing.model.Supplier;
-import com.hnm.billing.model.User;
+import com.hnm.billing.model.*;
 import com.hnm.billing.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -56,7 +53,7 @@ public class BillDaoImpl implements BillDao {
     @Override
     public List<Supplier> getSuppliersByConnectionType(String connectionType) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("connectionType").is(connectionType));
+        query.addCriteria(Criteria.where("connectionType").is(ConnectionType.valueOf(connectionType).getDisplayName()));
         return mongoTemplate.find(query, Supplier.class);
     }
 

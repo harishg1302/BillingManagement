@@ -50,6 +50,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> getAllUsers() {
         Query query = new Query();
         query.addCriteria(Criteria.where("status").is(true));
+        query.addCriteria(Criteria.where("role").is("CUSTOMER"));
         List<User> user = mongoTemplate.find(query, User.class);
         return user;
     }

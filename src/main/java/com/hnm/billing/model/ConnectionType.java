@@ -15,4 +15,12 @@ public enum ConnectionType {
         this.id = id;
         this.displayName = displayName;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }

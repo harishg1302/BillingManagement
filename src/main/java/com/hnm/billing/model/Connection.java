@@ -20,7 +20,7 @@ public class Connection implements Serializable {
     private long id;
     private long userId;
     @Field(targetType = FieldType.STRING)
-    private ConnectionType connectionType;
+    private String connectionType;
     private boolean status;
     private String connectionNumber;
     @DBRef
@@ -42,11 +42,11 @@ public class Connection implements Serializable {
         this.userId = userId;
     }
 
-    public ConnectionType getConnectionType() {
+    public String getConnectionType() {
         return connectionType;
     }
 
-    public void setConnectionType(ConnectionType connectionType) {
+    public void setConnectionType(String connectionType) {
         this.connectionType = connectionType;
     }
 
