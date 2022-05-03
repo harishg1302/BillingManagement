@@ -64,9 +64,14 @@ public class BillController {
         return billService.saveConnection(connection, Long.parseLong(supplierId));
     }
 
-    @GetMapping("/getConnectionsByUserId/{userId}")
+    @GetMapping("/getConnectionsByUserId")
     @ResponseBody
-    public List<Connection> getConnectionsByUserId(@PathVariable long userId){
-        return billService.getConnectionsByUserId(userId);
+    public List<Connection> getConnectionsByUserId(HttpSession session){
+        User currentUser = (User) session.getAttribute("user");
+        if(currentUser != null) {
+            return billService.getConnectionsByUserId(currentUser.getId());
+        } else {
+            return null;
+        }
     }
 }
