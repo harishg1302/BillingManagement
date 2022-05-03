@@ -22,9 +22,6 @@
 <h2> Register </h2>
 <form action="register" method="post">
 	<div>
-		<%--		<div>--%>
-		<%--			<input type="text" name="id" placeholder="Id">--%>
-		<%--		</div>--%>
 		<div>
 			<input type="text" name="name" placeholder="User Name">
 		</div>

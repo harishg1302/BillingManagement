@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	$('#allUsersDiv').hide();
 	$('#generateBillDiv').hide();
-	$("#datepicker").datepicker();
+	// $("#datepicker").datepicker();
 
 	$('#usersBtn').on('click', function () {
 		$('#allUsersDiv').show();
@@ -33,7 +33,7 @@ $(document).ready(function () {
 				console.log('data: ' + data);
 				var jsonObject = JSON.stringify(data);
 				$.each(data, function (i, obj) {
-					usersTBody.append("<tr><td>" + i + "<input type='hidden' id='userId' value=" + obj.id + "></td><td>" + obj.name + "</td><td>" + obj.email + "</td><td><button id='addCustomerBill'>Add Bill</button></td></tr>");
+					usersTBody.append("<tr><td>" + ++i + "<input type='hidden' id='userId' value=" + obj.id + "></td><td>" + obj.name + "</td><td>" + obj.email + "</td><td><button id='addCustomerBill'>Add Bill</button></td></tr>");
 				});
 			})
 		});

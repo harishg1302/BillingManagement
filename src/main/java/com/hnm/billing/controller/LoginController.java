@@ -18,7 +18,7 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/")
+	@GetMapping({ "/", "/login" })
 	public String welcome() {
 
 		return "login";
@@ -26,9 +26,10 @@ public class LoginController {
 
 	@PostMapping("/login")
 	public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session) {
+
 		loginDTO.setPassword(Base64.getEncoder().encodeToString(loginDTO.getPassword().getBytes()));
 		User loggedInUser = userService.loginUser(loginDTO);
-		if(loggedInUser != null){
+		if (loggedInUser != null) {
 			session.setAttribute("user", loggedInUser);
 			return "userHome";
 		} else {
