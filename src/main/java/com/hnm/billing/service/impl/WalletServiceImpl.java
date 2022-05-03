@@ -13,12 +13,12 @@ public class WalletServiceImpl implements WalletService {
     private WalletDao walletDao;
 
     @Override
-    public Wallet getWalletByUserId(int userId) {
+    public Wallet getWalletByUserId(long userId) {
         return walletDao.getWalletByUserId(userId);
     }
 
     @Override
-    public Wallet getWalletWithUpdatedBalance(int userId, double addAmount) {
+    public Wallet getWalletWithUpdatedBalance(long userId, double addAmount) {
         return walletDao.getWalletWithUpdatedBalance(userId, addAmount);
     }
 }

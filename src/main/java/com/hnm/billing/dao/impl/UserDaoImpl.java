@@ -36,8 +36,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getByEmailId(String emailId) {
-        User user = mongoTemplate.findById(emailId, User.class);
-        return user;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("emailId").is(emailId));
+        return mongoTemplate.findOne(query, User.class);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class Wallet implements Serializable {
     public static final String SEQUENCE_NAME = "wallet_sequence";
     @Id
     private long walletId;
-    private int userId;
+    private long userId;
     private double balance;
 
     public long getWalletId() {
@@ -25,11 +25,11 @@ public class Wallet implements Serializable {
         this.walletId = walletId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

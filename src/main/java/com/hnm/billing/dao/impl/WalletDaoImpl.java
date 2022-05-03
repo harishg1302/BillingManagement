@@ -20,14 +20,14 @@ public class WalletDaoImpl implements WalletDao {
     private SequenceGeneratorService sequenceGeneratorService;
 
     @Override
-    public Wallet getWalletByUserId(int userId) {
+    public Wallet getWalletByUserId(long userId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId));
         return mongoTemplate.findOne(query, Wallet.class);
     }
 
     @Override
-    public Wallet getWalletWithUpdatedBalance(int userId, double addAmount) {
+    public Wallet getWalletWithUpdatedBalance(long userId, double addAmount) {
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId));
         Wallet wallet = mongoTemplate.findOne(query, Wallet.class);

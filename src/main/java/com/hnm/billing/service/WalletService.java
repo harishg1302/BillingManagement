@@ -4,6 +4,6 @@ import com.hnm.billing.model.Wallet;
 
 public interface WalletService {
 
-    Wallet getWalletByUserId(int userId);
-    Wallet getWalletWithUpdatedBalance(int userId, double addAmount);
+    Wallet getWalletByUserId(long userId);
+    Wallet getWalletWithUpdatedBalance(long userId, double addAmount);
 }

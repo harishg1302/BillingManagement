@@ -1,6 +1,7 @@
 package com.hnm.billing.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -11,8 +12,10 @@ import java.io.Serializable;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1234567L;
+	@Transient
+	public static final String SEQUENCE_NAME = "user_sequence";
 	@Id
-	private int id;
+	private long id;
 	private String  name;
 	private String  mobileNumber;
 	private String  email;
@@ -22,12 +25,12 @@ public class User implements Serializable {
 	private boolean status;
 	private String  password;
 
-	public int getId() {
+	public long getId() {
 
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 
 		this.id = id;
 	}
