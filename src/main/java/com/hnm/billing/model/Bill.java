@@ -1,6 +1,7 @@
 package com.hnm.billing.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -13,9 +14,11 @@ import java.util.Date;
 public class Bill implements Serializable {
 
     private static final long serialVersionUID = 123456L;
+    @Transient
+    public static final String SEQUENCE_NAME = "bill_sequence";
     @Id
-    private int id;
-    private int userId;
+    private long id;
+    private long userId;
     @DBRef
     private Connection connection;
     private Date billingDate;
@@ -23,19 +26,19 @@ public class Bill implements Serializable {
     private BillStatus billStatus;
     private double amount;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

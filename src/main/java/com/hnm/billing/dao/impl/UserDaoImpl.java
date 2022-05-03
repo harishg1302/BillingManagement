@@ -4,6 +4,7 @@ import com.hnm.billing.dao.UserDao;
 import com.hnm.billing.dto.LoginDTO;
 import com.hnm.billing.model.User;
 import com.hnm.billing.model.Wallet;
+import com.hnm.billing.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,8 +20,12 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
     @Override
     public User saveUser(User user) {
+        user.setId(sequenceGeneratorService.generateSequence(User.SEQUENCE_NAME));
         return mongoTemplate.save(user);
     }
 

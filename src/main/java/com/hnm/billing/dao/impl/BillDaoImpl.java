@@ -2,8 +2,10 @@ package com.hnm.billing.dao.impl;
 
 import com.hnm.billing.dao.BillDao;
 import com.hnm.billing.dto.ConnectionDTO;
+import com.hnm.billing.model.Bill;
 import com.hnm.billing.model.Connection;
 import com.hnm.billing.model.User;
+import com.hnm.billing.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,6 +19,9 @@ public class BillDaoImpl implements BillDao {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
 
     public ConnectionDTO generateBill(long userId) {
         Query query = new Query();
@@ -32,5 +37,11 @@ public class BillDaoImpl implements BillDao {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Bill saveBill(Bill bill) {
+        bill.setId(sequenceGeneratorService.generateSequence(Bill.SEQUENCE_NAME));
+        return mongoTemplate.save(bill);
     }
 }
