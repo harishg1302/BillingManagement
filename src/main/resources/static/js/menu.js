@@ -20,6 +20,7 @@ $(document).ready(function () {
 		$('#logoutBtn').removeClass('active');
 		$('#walletBtn').removeClass('active');
 		resetConnectionDiv();
+		getAllConnectionsByUser();
 	});
 
 	$('#billingBtn').on('click', function () {
@@ -121,6 +122,7 @@ $(document).ready(function () {
 			type: "GET",
 			success: $.proxy(function (data) {
 				resetConnectionDiv();
+				getAllConnectionsByUser();
 			})
 		});
 	};
@@ -149,4 +151,25 @@ $(document).ready(function () {
 		$('#suppliers').val('');
 		$('#connectionNumber').val('');
 	}
+
+	function getAllConnectionsByUser() {
+
+		var $connectionsTBody = $('#allConnectionsTBody');
+		$connectionsTBody.empty();
+		$.ajax({
+			url: 'bill/getConnectionsByUserId/1',
+			type: "GET",
+			success: $.proxy(function (data) {
+				var jsonObject = JSON.stringify(data);
+				$.each(data, function (i, obj) {
+					$connectionsTBody.append("" +
+						"<tr>" +
+						"<td>" + ++i + "<input type='hidden' id='userId' value=" + obj.id + "></td>" +
+						"<td>" + obj.connectionType + "</td><td>" + obj.supplier.name + "</td>" +
+						"<td>" + obj.connectionNumber + "</td>" +
+						"</tr>");
+				});
+			})
+		});
+	};
 });

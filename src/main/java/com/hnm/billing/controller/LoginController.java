@@ -19,13 +19,13 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping({ "/", "/login" })
+	@GetMapping({ "/", "/login", "/user/login" })
 	public String welcome() {
 
 		return "login";
 	}
 
-	@PostMapping("/login")
+	@PostMapping({ "/login", "/user/login" })
 	public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session) {
 
 		loginDTO.setPassword(Base64.getEncoder().encodeToString(loginDTO.getPassword().getBytes()));

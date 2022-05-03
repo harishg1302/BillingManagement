@@ -31,7 +31,7 @@ body {
 	margin-top: -22px;
 }
 
-#mainConnectionDiv > div {
+#mainConnectionDiv > div, #addConnectionDiv > div {
 	padding: 0px 0px 12px 1px;
 }
 
@@ -81,26 +81,26 @@ h6 {
 	color: white;
 }
 
-#allUsersTbl {
+.customTbl {
 	font-family: Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-#allUsersTbl td, #allUsersTbl th {
+.customTbl td, .customTbl th {
 	border: 1px solid #ddd;
 	padding: 8px;
 }
 
-#allUsersTbl tr:nth-child(even) {
+.customTbl tr:nth-child(even) {
 	background-color: #f2f2f2;
 }
 
-#allUsersTbl tr:hover {
+.customTbl tr:hover {
 	background-color: #ddd;
 }
 
-#allUsersTbl th {
+.customTbl th {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	text-align: left;
@@ -128,7 +128,7 @@ button:hover {
 	display: none;
 	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
+	padding-top: 2%; /* Location of the box */
 	left: 0;
 	top: 0;
 	width: 100%; /* Full width */
@@ -160,4 +160,36 @@ button:hover {
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+.parent {
+	/*border: 1px solid black;*/
+	margin: 1rem;
+	padding: 2rem 2rem;
+	/*text-align: center;*/
+}
+
+.child {
+	display: inline-block;
+	/*border: 1px solid red;*/
+	padding: 1rem 1rem;
+	/*vertical-align: middle;*/
+}
+
+#addConnectionDiv {
+	width: 31%;
+	margin-right: auto;
+	vertical-align: top;
+	align-content: baseline;
+}
+
+#allConnectionsDiv {
+	width: 60%;
+}
+
+#addConnectionDiv > input, #addConnectionDiv > button, #addConnectionDiv > select {
+	width: 70% !important;
+	height: 7%;
+	border-radius: 4px;
+	border: 1px solid #7d7474;
 }
