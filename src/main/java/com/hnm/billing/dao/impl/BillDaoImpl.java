@@ -27,7 +27,9 @@ public class BillDaoImpl implements BillDao {
         query.addCriteria(Criteria.where("status").is(true));
         User user = mongoTemplate.findOne(query, User.class);
         if (user != null) {
-            List<Connection> connectionList = mongoTemplate.find(query, Connection.class);
+            Query query1 = new Query();
+            query1.addCriteria(Criteria.where("userId").is(userId));
+            List<Connection> connectionList = mongoTemplate.find(query1, Connection.class);
             ConnectionDTO connectionDTO = new ConnectionDTO();
             connectionDTO.setConnectionList(connectionList);
             connectionDTO.setEmailId(user.getEmail());
