@@ -159,7 +159,7 @@ $(document).ready(function () {
 		var $connectionsTBody = $('#allConnectionsTBody');
 		$connectionsTBody.empty();
 		$.ajax({
-			url: 'bill/getConnectionsByUserId/1',
+			url: 'bill/getConnectionsByUserId',
 			type: "GET",
 			success: $.proxy(function (data) {
 				var jsonObject = JSON.stringify(data);
