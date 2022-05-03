@@ -16,7 +16,9 @@
 	</style>
 </head>
 <body>
-<h1> Login </h1>
+<center>
+<h1> Billing Management</h1>
+<h2> Login </h2>
 <form action="login" method="post">
 	<div>
 		<div>
@@ -27,9 +29,11 @@
 		</div>
 		<div>
 			<input type="submit" value="Login">
+			<br/><br/>
 			<a href="user/register">Sign Up</a>
 		</div>
 	</div>
 </form>
+</center>
 </body>
 </html>

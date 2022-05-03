@@ -21,6 +21,10 @@ $(document).ready(function () {
 		$('#billingDiv').show();
 	});
 
+	$('#logoutBtn').on('click', function () {
+    		logout();
+    	});
+
 	$('#addWalletAmountBtn').on('click', function () {
 		updateWalletBalance();
 	});
@@ -36,6 +40,17 @@ $(document).ready(function () {
 			})
 		});
 	};
+
+	function logout() {
+
+    		$.ajax({
+    			url: 'logout',
+    			type: "GET",
+    			success: $.proxy(function (data) {
+    			    window.location.href="login"
+    			})
+    		});
+    	};
 
 	function updateWalletBalance() {
 

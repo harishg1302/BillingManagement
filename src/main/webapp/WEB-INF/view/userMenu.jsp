@@ -3,46 +3,50 @@
 <head>
 	<title>Title</title>
 	<style>
-		div {
-			padding: 0px 0px 12px 1px;
-		}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-		a {
-			width: 30%;
-			height: 7%;
-			border-radius: 4px;
-			border: 1px solid #7d7474;
-		}
+    .topnav {
+      overflow: hidden;
+      background-color: #333;
+    }
 
-		.float-container {
-			padding: 20px;
-		}
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
 
-		.float-child {
-			width: 36%;
-			float: left;
-			padding: 20px;
-		}
-	</style>
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .topnav a.active {
+      background-color: #04AA6D;
+      color: white;
+    }
+
+    .float-container{
+        margin-top: -22px;
+    }
+    </style>
 	<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="./js/menu.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="float-container">
-	<div class="float-child">
-		<div>
-			<button id="walletBtn">Wallet</button>
-		</div>
-		<div>
-			<button id="profileBtn">Profile</button>
-		</div>
-		<div>
-			<button id="billingBtn">Billing</button>
-		</div>
-		<div>
-			<button id="logout">Logout</button>
-		</div>
-	</div>
+	<div class="topnav">
+      <a class="active" id="walletBtn">Wallet</a>
+      <a id="profileBtn">Profile</a>
+      <a id="billingBtn">Billing</a>
+      <a id="logoutBtn">Logout</a>
+    </div>
 	<div id="walletDiv" class="float-child" style="display: none;">
 		<%@include file="wallet.jsp" %>
 	</div>

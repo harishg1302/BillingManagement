@@ -13,10 +13,13 @@
 			border-radius: 4px;
 			border: 1px solid #7d7474;
 		}
+
 	</style>
 </head>
 <body>
-<h1> Register </h1>
+<center>
+<h1> Billing Management</h1>
+<h2> Register </h2>
 <form action="register" method="post">
 	<div>
 		<%--		<div>--%>
@@ -43,5 +46,6 @@
 		</div>
 	</div>
 </form>
+</center>
 </body>
 </html>

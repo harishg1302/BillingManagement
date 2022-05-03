@@ -30,10 +30,16 @@ public class LoginController {
 		User loggedInUser = userService.loginUser(loginDTO);
 		if(loggedInUser != null){
 			session.setAttribute("user", loggedInUser);
-			return "home";
+			return "userHome";
 		} else {
 			return "login";
 		}
 
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session){
+		session.invalidate();
+		return "login";
 	}
 }
