@@ -43,9 +43,9 @@ public class BillController {
         return billService.saveBill(bill);
     }
 
-    @GetMapping("/getSuppliersByConnectionType")
+    @GetMapping("/getSuppliersByConnectionType/{connectionType}")
     @ResponseBody
-    public List<Supplier> getSuppliersByConnectionType(@RequestParam String connectionType){
+    public List<Supplier> getSuppliersByConnectionType(@PathVariable String connectionType){
        return billService.getSuppliersByConnectionType(connectionType);
     }
 }
