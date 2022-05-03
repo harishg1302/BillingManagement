@@ -2,7 +2,7 @@
 	<div>
 		<h6><span class="connection">Connection Type</span></h6>
 		<select id="connectionType">
-			<option value="None">Select</option>
+			<option value="0">Select</option>
 			<option value="DTH">DTH</option>
 			<option value="ELECTRICITY">Electricity</option>
 			<option value="WATER">Water</option>

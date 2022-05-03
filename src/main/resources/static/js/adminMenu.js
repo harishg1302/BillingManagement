@@ -76,6 +76,8 @@ $(document).ready(function () {
 					$modal.find('#customerEmailId').text(data.emailId);
 					$modal.find('#customerId').val(selectedUserId);
 					$modal.show();
+					$modal.find('#connectionType').empty();
+					$modal.find('#connectionNumber').empty();
 					$.each(data.connectionList, function (i, obj) {
 						$modal.find('#connectionId').val(obj.id);
 						$modal.find('#connectionType').append($('<option>', {

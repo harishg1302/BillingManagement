@@ -19,6 +19,7 @@ $(document).ready(function () {
 		$('#billingBtn').removeClass('active');
 		$('#logoutBtn').removeClass('active');
 		$('#walletBtn').removeClass('active');
+		resetConnectionDiv();
 	});
 
 	$('#billingBtn').on('click', function () {
@@ -137,7 +138,7 @@ $(document).ready(function () {
 			url: 'bill/saveConnection?connectionType=' + connectionType + "&connectionNumber=" + connectionNumber + "&supplierId=" + supplierId,
 			type: "GET",
 			success: $.proxy(function (data) {
-				console.log('data: ' + data);
+				resetConnectionDiv();
 			})
 		});
 	};
@@ -160,4 +161,10 @@ $(document).ready(function () {
 			})
 		});
 	};
+
+	function resetConnectionDiv() {
+		$('#connectionType').val('0');
+		$('#suppliers').val('');
+		$('#connectionNumber').val('');
+	}
 });
