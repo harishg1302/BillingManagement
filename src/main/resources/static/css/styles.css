@@ -62,6 +62,14 @@ h6 {
 
 .headerDiv {
 	background-color: grey;
-	text-align: left;
+	text-align: center;
 	margin-top: -22px;
+}
+
+.headerDiv > h6 {
+	height: 0px;
+	width: 7%;
+	margin-left: auto;
+	margin-right: 0;
+	color: white;
 }
