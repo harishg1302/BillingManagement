@@ -14,23 +14,23 @@
 		<form id="saveBillForm">
 			<div>
 				<input type="hidden" id="connectionId">
-				<h6>Connection Type</h6>
+				<h6 class="modalh6">Connection Type</h6>
 				<select id="connectionType"></select>
 			</div>
 			<div>
-				<h6>Connection Number</h6>
+				<h6 class="modalh6">Connection Number</h6>
 				<select id="connectionNumber"></select>
 			</div>
 			<div>
-				<h6>Supplier Name</h6>
+				<h6 class="modalh6">Supplier Name</h6>
 				<input type="text" id="supplierName" disabled="true">
 			</div>
 			<div>
-				<h6>Billing Date</h6>
+				<h6 class="modalh6">Billing Date</h6>
 				<input type="text" id="datepicker">
 			</div>
 			<div>
-				<h6>Amount</h6>
+				<h6 class="modalh6">Amount</h6>
 				<input type="text" id="payableAmount">
 			</div>
 		</form>

@@ -3,6 +3,7 @@ $(document).ready(function () {
 	$('#generateBillDiv').hide();
 	$("#datepicker").datepicker();
 	clickOnUsersBtn();
+	var connectionsList = [];
 
 	$('#usersBtn').on('click', function () {
 		$('#usersBtn').addClass('active');
@@ -25,6 +26,16 @@ $(document).ready(function () {
 		$('#saveBillBtn').removeClass('active');
 		$('#logoutBtn').addClass('active');
 		logout();
+	});
+
+	$('#myModal').find('#connectionType').on('change', function () {
+		var connectionType = $(this).val();
+		getConnectionNumbersByType(connectionType);
+	});
+
+	$('#myModal').find('#connectionNumber').on('change', function () {
+		var connectionNumber = $(this).val();
+		setSupplierNameByConnectionNumber(connectionNumber);
 	});
 
 	function clickOnUsersBtn() {
@@ -64,8 +75,6 @@ $(document).ready(function () {
 
 		var selectedUserId = $selectedUser.closest('tr').find('input:hidden').val()
 		$('#generateBillDiv').show();
-
-		console.log('selectedUserId : ' + selectedUserId);
 		$.ajax({
 			url: 'bill/generateBill/' + selectedUserId,
 			type: "GET",
@@ -78,21 +87,17 @@ $(document).ready(function () {
 					$modal.show();
 					$modal.find('#connectionType').empty();
 					$modal.find('#connectionNumber').empty();
-					$.each(data.connectionList, function (i, obj) {
+					connectionsList = data.connectionList;
+					$.each(connectionsList, function (i, obj) {
 						$modal.find('#connectionId').val(obj.id);
 						$modal.find('#connectionType').append($('<option>', {
 							value: obj.connectionType,
 							text: obj.connectionType
 						}));
-
-						$modal.find('#connectionNumber').append($('<option>', {
-							value: obj.connectionNumber,
-							text: obj.connectionNumber
-						}));
-
-						$modal.find('#supplierName').val(obj.supplier.name);
 					});
+					getConnectionNumbersByType(connectionsList[0].connectionType);
 				} else {
+					connectionsList = [];
 					var $errorModal = $('#errorModal');
 					$errorModal.find('#errorMessage').text('There is no connection available for this user.');
 					$errorModal.show();
@@ -111,6 +116,42 @@ $(document).ready(function () {
 			success: $.proxy(function (data) {
 
 			})
+		});
+	};
+
+	function getConnectionNumbersByType(connectionType) {
+
+		var $connectionNumbers = $('#myModal').find('#connectionNumber');
+		$connectionNumbers.empty();
+		$.each(connectionsList, function (i, obj) {
+
+			if (connectionType == obj.connectionType) {
+				$connectionNumbers.append($('<option>', {
+					value: obj.connectionNumber,
+					text: obj.connectionNumber
+				}));
+			}
+		});
+
+		$.each(connectionsList, function (i, obj) {
+
+			if (connectionType == obj.connectionType) {
+				setSupplierNameByConnectionNumber(obj.connectionNumber);
+				return false;
+			}
+		});
+
+	};
+
+	function setSupplierNameByConnectionNumber(connectionNumber) {
+
+		var $supplierName = $('#myModal').find('#supplierName');
+		$supplierName.val('');
+		$.each(connectionsList, function (i, obj) {
+
+			if (connectionNumber == obj.connectionNumber) {
+				$supplierName.val(obj.supplier.name);
+			}
 		});
 	};
 

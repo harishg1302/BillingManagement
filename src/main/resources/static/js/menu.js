@@ -110,24 +110,6 @@ $(document).ready(function () {
 		});
 	};
 
-	function getSuppliersListByType(connectionType) {
-
-		var $suppliers = $('#suppliers');
-		$.ajax({
-			url: 'bill/getSuppliersByConnectionType/' + connectionType,
-			type: "GET",
-			success: $.proxy(function (data) {
-				console.log('data: ' + data.balance);
-				$.each(data, function (i, obj) {
-					$suppliers.append($('<option>', {
-						value: obj.id,
-						text: obj.name
-					}));
-				});
-			})
-		});
-	};
-
 	function saveConnection() {
 
 		var connectionType = $('#connectionType').val();
