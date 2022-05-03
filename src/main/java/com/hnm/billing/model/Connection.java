@@ -18,7 +18,7 @@ public class Connection implements Serializable {
     public static final String SEQUENCE_NAME = "connection_sequence";
     @Id
     private long id;
-    private int userId;
+    private long userId;
     @Field(targetType = FieldType.STRING)
     private ConnectionType connectionType;
     private boolean status;
@@ -34,11 +34,11 @@ public class Connection implements Serializable {
         this.id = id;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

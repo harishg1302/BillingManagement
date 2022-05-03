@@ -1,19 +1,13 @@
 package com.hnm.billing.controller;
 
 import com.hnm.billing.dto.ConnectionDTO;
-import com.hnm.billing.model.Bill;
-import com.hnm.billing.model.BillStatus;
-import com.hnm.billing.model.Connection;
-import com.hnm.billing.model.Supplier;
+import com.hnm.billing.model.*;
 import com.hnm.billing.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -47,5 +41,17 @@ public class BillController {
     @ResponseBody
     public List<Supplier> getSuppliersByConnectionType(@PathVariable String connectionType){
        return billService.getSuppliersByConnectionType(connectionType);
+    }
+
+    @PostMapping("/saveConnection")
+    @ResponseBody
+    public Connection saveConnection(@RequestParam String connectionType, @RequestParam String connectionNumber, @RequestParam String supplierId, HttpSession session){
+        User currentUser = (User) session.getAttribute("user");
+        Connection connection = new Connection();
+        connection.setUserId(currentUser.getId());
+        connection.setConnectionType(ConnectionType.valueOf(connectionType));
+        connection.setStatus(true);
+        connection.setConnectionNumber(connectionNumber);
+        return billService.saveConnection(connection, Long.parseLong(supplierId));
     }
 }

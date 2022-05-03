@@ -56,4 +56,13 @@ public class BillDaoImpl implements BillDao {
         query.addCriteria(Criteria.where("connectionType").is(connectionType));
         return mongoTemplate.find(query, Supplier.class);
     }
+
+    @Override
+    public Connection saveConnection(Connection connection, long supplierId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(supplierId));
+        Supplier supplier = mongoTemplate.findOne(query, Supplier.class);
+        connection.setSupplier(supplier);
+        return mongoTemplate.save(connection);
+    }
 }

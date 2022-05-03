@@ -37,4 +37,9 @@ public class BillServiceImpl implements BillService {
         return billDao.getSuppliersByConnectionType(connectionType);
     }
 
+    @Override
+    public Connection saveConnection(Connection connection, long supplierId) {
+        return billDao.saveConnection(connection, supplierId);
+    }
+
 }

@@ -13,4 +13,5 @@ public interface BillDao {
     Bill saveBill(Bill bill);
     Connection getConnectionById(long connectionId);
     List<Supplier> getSuppliersByConnectionType(String connectionType);
+    Connection saveConnection(Connection connection, long supplierId);
 }
