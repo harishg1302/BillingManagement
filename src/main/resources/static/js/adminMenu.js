@@ -88,7 +88,8 @@ $(document).ready(function () {
 					$modal.find('#connectionType').empty();
 					$modal.find('#connectionNumber').empty();
 					connectionsList = data.connectionList;
-					$.each(connectionsList, function (i, obj) {
+					const uniqueConnectionTypes = [...new Map(connectionsList.map(item => [item['connectionType'], item])).values()];
+					$.each(uniqueConnectionTypes, function (i, obj) {
 						$modal.find('#connectionId').val(obj.id);
 						$modal.find('#connectionType').append($('<option>', {
 							value: obj.connectionType.toUpperCase(),
@@ -108,13 +109,16 @@ $(document).ready(function () {
 
 	function saveGeneratedBill() {
 		var $modal = $('#myModal');
+		var customerId = $modal.find('#customerId').val();
+		var billingDate = $modal.find('#datepicker').val();
+		var connectionId = $modal.find('#connectionId').val();
+		var payableAmount = $modal.find('#payableAmount').val();
 		$.ajax({
-			url: 'bill/saveBill?userId=' + $modal.find('#customerId').val() + "&billingDate=" + $modal.find('#datepicker').val()
-				+ "&connectionId=" + $modal.find('#connectionId').val() + "&amount=" + $modal.find('#payableAmount').val(),
+			url: 'bill/saveBill?userId=' + customerId + "&billingDate=" + billingDate + "&connectionId=" + connectionId + "&amount=" + payableAmount,
 			type: "GET",
 			contentType: 'application/json',
 			success: $.proxy(function (data) {
-
+				$('#myModal').hide();
 			})
 		});
 	};
@@ -125,7 +129,8 @@ $(document).ready(function () {
 		$connectionNumbers.empty();
 		$.each(connectionsList, function (i, obj) {
 
-			if (connectionType == obj.connectionType) {
+			if (connectionType.toUpperCase() == obj.connectionType.toUpperCase()) {
+				$('#myModal').find('#connectionId').val(obj.id);
 				$connectionNumbers.append($('<option>', {
 					value: obj.connectionNumber,
 					text: obj.connectionNumber
@@ -135,7 +140,7 @@ $(document).ready(function () {
 
 		$.each(connectionsList, function (i, obj) {
 
-			if (connectionType == obj.connectionType) {
+			if (connectionType.toUpperCase() == obj.connectionType.toUpperCase()) {
 				setSupplierNameByConnectionNumber(obj.connectionNumber);
 				return false;
 			}
