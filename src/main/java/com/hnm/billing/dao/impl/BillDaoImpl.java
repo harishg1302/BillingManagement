@@ -2,13 +2,7 @@ package com.hnm.billing.dao.impl;
 
 import com.hnm.billing.dao.BillDao;
 import com.hnm.billing.dto.ConnectionDTO;
-import com.hnm.billing.model.Bill;
-import com.hnm.billing.model.BillStatus;
-import com.hnm.billing.model.Connection;
-import com.hnm.billing.model.ConnectionType;
-import com.hnm.billing.model.Supplier;
-import com.hnm.billing.model.User;
-import com.hnm.billing.model.Wallet;
+import com.hnm.billing.model.*;
 import com.hnm.billing.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -91,7 +85,7 @@ public class BillDaoImpl implements BillDao {
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId));
         List<Bill> bills = mongoTemplate.find(query, Bill.class);
-        if(!CollectionUtils.isEmpty(bills)) {
+        if (!CollectionUtils.isEmpty(bills)) {
             return bills.stream().filter(bill -> bill.getConnection().getConnectionType().equalsIgnoreCase(connectionTypeValue)).collect(Collectors.toList());
         } else {
             return null;
@@ -108,20 +102,23 @@ public class BillDaoImpl implements BillDao {
         Query query1 = new Query();
         query1.addCriteria(Criteria.where("userId").is(bill.getUserId()));
         Wallet wallet = mongoTemplate.findOne(query1, Wallet.class);
+        if (wallet != null) {
+            if (wallet.getBalance() >= bill.getAmount()) {
 
-        if(wallet.getBalance() >= bill.getAmount()){
+                Update updateBillStatus = new Update();
+                updateBillStatus.set("billStatus", BillStatus.PAID);
+                mongoTemplate.updateFirst(query, updateBillStatus, Bill.class);
 
-            Update updateBillStatus = new Update();
-            updateBillStatus.set("billStatus", BillStatus.PAID);
-            mongoTemplate.updateFirst(query, updateBillStatus, Bill.class);
+                Update updateWalletBalance = new Update();
+                double updatedBalance = wallet.getBalance() - bill.getAmount();
+                updateWalletBalance.set("balance", updatedBalance);
+                mongoTemplate.updateFirst(query1, updateWalletBalance, Wallet.class);
 
-            Update updateWalletBalance = new Update();
-            double updatedBalance = wallet.getBalance() - bill.getAmount();
-            updateBillStatus.set("balance", updatedBalance);
-            mongoTemplate.updateFirst(query1, updateWalletBalance, Wallet.class);
+                return "PAID";
 
-            return "PAID";
-
+            } else {
+                return "AMOUNT_INSUFFICIENT";
+            }
         } else {
             return "AMOUNT_INSUFFICIENT";
         }
