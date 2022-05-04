@@ -2,7 +2,13 @@ package com.hnm.billing.dao.impl;
 
 import com.hnm.billing.dao.BillDao;
 import com.hnm.billing.dto.ConnectionDTO;
-import com.hnm.billing.model.*;
+import com.hnm.billing.model.Bill;
+import com.hnm.billing.model.BillStatus;
+import com.hnm.billing.model.Connection;
+import com.hnm.billing.model.ConnectionType;
+import com.hnm.billing.model.Supplier;
+import com.hnm.billing.model.User;
+import com.hnm.billing.model.Wallet;
 import com.hnm.billing.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -114,10 +120,10 @@ public class BillDaoImpl implements BillDao {
             updateBillStatus.set("balance", updatedBalance);
             mongoTemplate.updateFirst(query1, updateWalletBalance, Wallet.class);
 
-            return "Bill Paid";
+            return "PAID";
 
         } else {
-            return "Your Wallet Amount is insufficient";
+            return "AMOUNT_INSUFFICIENT";
         }
     }
 }

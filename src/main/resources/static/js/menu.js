@@ -54,10 +54,18 @@ $(document).ready(function () {
 		saveConnection();
 	});
 
-	$('.allBillingBtn').on('click', function () {
+	$('.allBillingBtn').on('click', function (e) {
+		e.stopImmediatePropagation();
+		e.preventDefault();
 		var $currentBtn = $(this);
 		resetResetBillingBtn($currentBtn);
 		getAllBillsByConnectionTypeAndUser($currentBtn.text().toUpperCase());
+		$(document).find('.payBill').off("click");
+
+		$(document).on('click', '.payBill', function (event) {
+			var $billRow = $(event.currentTarget);
+			payBill($billRow, event);
+		});
 	});
 
 	function clickOnWalletBtn() {
@@ -202,9 +210,26 @@ $(document).ready(function () {
 						"<td>" + obj.connection.connectionNumber + "</td>" +
 						"<td>" + obj.amount + "</td>" +
 						"<td>" + obj.billStatus + "</td>" +
-						"<td><button id='payBill'>Pay</button></td>" +
+						"<td><button class='payBill'>Pay</button></td>" +
 						"</tr>");
 				});
+			})
+		});
+	};
+
+	function payBill($billRow, e) {
+
+		e.stopImmediatePropagation();
+		e.preventDefault();
+
+		var billId = $billRow.closest('tr').find('input:hidden').val()
+		$.ajax({
+			url: 'bill/payBill/' + billId,
+			type: "PUT",
+			success: $.proxy(function (data) {
+				if (data == 'AMOUNT_INSUFFICIENT') {
+
+				}
 			})
 		});
 	};
