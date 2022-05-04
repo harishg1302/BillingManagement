@@ -74,6 +74,12 @@ $(document).ready(function () {
 	function getDataForGenerateBill($selectedUser) {
 
 		var selectedUserId = $selectedUser.closest('tr').find('input:hidden').val()
+		var $modal = $('#myModal');
+		$modal.find('#connectionType').empty();
+		$modal.find('#connectionNumber').empty();
+		$modal.find('#supplierName').val('');
+		$modal.find('#datepicker').val('');
+		$modal.find('#payableAmount').val('');
 		$('#generateBillDiv').show();
 		$.ajax({
 			url: 'bill/generateBill/' + selectedUserId,
@@ -81,12 +87,9 @@ $(document).ready(function () {
 			success: $.proxy(function (data) {
 
 				if (data.connectionList.length > 0) {
-					var $modal = $('#myModal');
 					$modal.find('#customerEmailId').text(data.emailId);
 					$modal.find('#customerId').val(selectedUserId);
 					$modal.show();
-					$modal.find('#connectionType').empty();
-					$modal.find('#connectionNumber').empty();
 					connectionsList = data.connectionList;
 					const uniqueConnectionTypes = [...new Map(connectionsList.map(item => [item['connectionType'], item])).values()];
 					$.each(uniqueConnectionTypes, function (i, obj) {

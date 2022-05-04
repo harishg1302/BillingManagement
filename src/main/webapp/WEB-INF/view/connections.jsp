@@ -7,7 +7,7 @@
 				<option value="DTH">DTH</option>
 				<option value="ELECTRICITY">Electricity</option>
 				<option value="WATER">Water</option>
-				<option value="MOBILE_RECHARGE">Mobile Recharge</option>
+				<option value="MOBILE">Mobile</option>
 				<option value="WIFI">WiFi</option>
 				<option value="GAS">Gas</option>
 			</select>
