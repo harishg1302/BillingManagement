@@ -52,4 +52,9 @@ public class BillServiceImpl implements BillService {
         return billDao.getBillsByUserIdAndConnectionType(userId, connectionType);
     }
 
+    @Override
+    public String payBill(long billId) {
+        return billDao.payBill(billId);
+    }
+
 }

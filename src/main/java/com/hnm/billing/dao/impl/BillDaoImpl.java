@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,5 +91,33 @@ public class BillDaoImpl implements BillDao {
             return null;
         }
 
+    }
+
+    @Override
+    public String payBill(long billId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(billId));
+        Bill bill = mongoTemplate.findOne(query, Bill.class);
+
+        Query query1 = new Query();
+        query1.addCriteria(Criteria.where("userId").is(bill.getUserId()));
+        Wallet wallet = mongoTemplate.findOne(query1, Wallet.class);
+
+        if(wallet.getBalance() >= bill.getAmount()){
+
+            Update updateBillStatus = new Update();
+            updateBillStatus.set("billStatus", BillStatus.PAID);
+            mongoTemplate.updateFirst(query, updateBillStatus, Bill.class);
+
+            Update updateWalletBalance = new Update();
+            double updatedBalance = wallet.getBalance() - bill.getAmount();
+            updateBillStatus.set("balance", updatedBalance);
+            mongoTemplate.updateFirst(query1, updateWalletBalance, Wallet.class);
+
+            return "Bill Paid";
+
+        } else {
+            return "Your Wallet Amount is insufficient";
+        }
     }
 }

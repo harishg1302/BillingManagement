@@ -1,9 +1,9 @@
 package com.hnm.billing.model;
 
 public enum BillStatus {
-    PENDING(1, "Pending"),
-    PAID(2, "Paid"),
-    OVERDUE(3, "Overdue");
+    PENDING(1, "PENDING"),
+    PAID(2, "PAID"),
+    OVERDUE(3, "OVERDUE");
 
     private int id;
     private String displayName;
