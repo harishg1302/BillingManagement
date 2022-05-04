@@ -47,4 +47,9 @@ public class BillServiceImpl implements BillService {
         return billDao.getConnectionsByUserId(userId);
     }
 
+    @Override
+    public List<Bill> getBillsByUserIdAndConnectionType(long userId, String connectionType) {
+        return billDao.getBillsByUserIdAndConnectionType(userId, connectionType);
+    }
+
 }

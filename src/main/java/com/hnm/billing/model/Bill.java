@@ -21,7 +21,7 @@ public class Bill implements Serializable {
     private long userId;
     @DBRef
     private Connection connection;
-    private Date billingDate;
+    private String billingDate;
     @Field(targetType = FieldType.STRING)
     private BillStatus billStatus;
     private double amount;
@@ -50,11 +50,11 @@ public class Bill implements Serializable {
         this.connection = connection;
     }
 
-    public Date getBillingDate() {
+    public String getBillingDate() {
         return billingDate;
     }
 
-    public void setBillingDate(Date billingDate) {
+    public void setBillingDate(String billingDate) {
         this.billingDate = billingDate;
     }
 

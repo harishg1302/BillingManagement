@@ -9,8 +9,11 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class BillDaoImpl implements BillDao {
@@ -74,5 +77,19 @@ public class BillDaoImpl implements BillDao {
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId));
         return mongoTemplate.find(query, Connection.class);
+    }
+
+    @Override
+    public List<Bill> getBillsByUserIdAndConnectionType(long userId, String connectionType) {
+        String connectionTypeValue = ConnectionType.valueOf(connectionType).getDisplayName();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        List<Bill> bills = mongoTemplate.find(query, Bill.class);
+        if(!CollectionUtils.isEmpty(bills)) {
+            return bills.stream().filter(bill -> bill.getConnection().getConnectionType().equalsIgnoreCase(connectionTypeValue)).collect(Collectors.toList());
+        } else {
+            return null;
+        }
+
     }
 }

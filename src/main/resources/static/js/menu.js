@@ -115,7 +115,7 @@ $(document).ready(function () {
 
 	function saveConnection() {
 
-		var connectionType = $('#connectionType').val();
+		var connectionType = $('#connectionType').val().toUpperCase();
 		var connectionNumber = $('#connectionNumber').val();
 		var supplierId = $('#suppliers').val();
 
@@ -189,7 +189,7 @@ $(document).ready(function () {
 		var $allBillsTBody = $('#allBillsTBody');
 		$allBillsTBody.empty();
 		$.ajax({
-			url: 'bill/getBillsByConnectionType/' + connectionType,
+			url: 'bill/getBillsByUserIdAndConnectionType/' + connectionType,
 			type: "GET",
 			success: $.proxy(function (data) {
 				var jsonObject = JSON.stringify(data);
@@ -197,8 +197,8 @@ $(document).ready(function () {
 					$allBillsTBody.append("" +
 						"<tr>" +
 						"<td>" + ++i + "<input type='hidden' id='billId' value=" + obj.id + "></td>" +
+						"<td>" + obj.billingDate + "</td>" +
 						"<td>" + obj.connection.supplier.name + "</td>" +
-						"<td>" + obj.supplier.name + "</td>" +
 						"<td>" + obj.connection.connectionNumber + "</td>" +
 						"<td>" + obj.amount + "</td>" +
 						"<td>" + obj.billStatus + "</td>" +

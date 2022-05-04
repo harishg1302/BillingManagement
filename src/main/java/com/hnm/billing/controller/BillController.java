@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +38,12 @@ public class BillController {
 
     @GetMapping("/saveBill")
     @ResponseBody
-    public Bill saveBill(@RequestParam String userId, @RequestParam String billingDate, @RequestParam String connectionId, @RequestParam String amount) {
+    public Bill saveBill(@RequestParam String userId, @RequestParam String billingDate, @RequestParam String connectionId, @RequestParam String amount) throws ParseException {
         Connection connection = billService.getConnectionById(Integer.valueOf(connectionId));
         Bill bill = new Bill();
         bill.setUserId(Integer.valueOf(userId));
         bill.setBillStatus(BillStatus.PENDING);
-        bill.setBillingDate(new Date(billingDate));
+        bill.setBillingDate(billingDate);
         bill.setAmount(Double.valueOf(amount));
         bill.setConnection(connection);
         return billService.saveBill(bill);
@@ -70,6 +73,17 @@ public class BillController {
         User currentUser = (User) session.getAttribute("user");
         if(currentUser != null) {
             return billService.getConnectionsByUserId(currentUser.getId());
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping("/getBillsByUserIdAndConnectionType/{connectionType}")
+    @ResponseBody
+    public List<Bill> getBillsByUserIdAndConnectionType(@PathVariable String connectionType, HttpSession session){
+        User currentUser = (User) session.getAttribute("user");
+        if(currentUser != null){
+           return billService.getBillsByUserIdAndConnectionType(currentUser.getId(), connectionType);
         } else {
             return null;
         }
