@@ -68,6 +68,10 @@ $(document).ready(function () {
 		});
 	});
 
+	$(document).on('click', '#closePayBillModal', function () {
+		$('#payBillModal').hide();
+	});
+
 	function clickOnWalletBtn() {
 		$('#walletDiv').show();
 		$('#connectionsDiv').hide();
@@ -202,16 +206,30 @@ $(document).ready(function () {
 			success: $.proxy(function (data) {
 				var jsonObject = JSON.stringify(data);
 				$.each(data, function (i, obj) {
-					$allBillsTBody.append("" +
-						"<tr>" +
-						"<td>" + ++i + "<input type='hidden' id='billId' value=" + obj.id + "></td>" +
-						"<td>" + obj.billingDate + "</td>" +
-						"<td>" + obj.connection.supplier.name + "</td>" +
-						"<td>" + obj.connection.connectionNumber + "</td>" +
-						"<td>" + obj.amount + "</td>" +
-						"<td>" + obj.billStatus + "</td>" +
-						"<td><button class='payBill'>Pay</button></td>" +
-						"</tr>");
+
+					if (obj.billStatus == 'PAID') {
+						$allBillsTBody.append("" +
+							"<tr>" +
+							"<td>" + ++i + "<input type='hidden' id='billId' value=" + obj.id + "></td>" +
+							"<td>" + obj.billingDate + "</td>" +
+							"<td>" + obj.connection.supplier.name + "</td>" +
+							"<td>" + obj.connection.connectionNumber + "</td>" +
+							"<td>" + obj.amount + "</td>" +
+							"<td id='billStatus'>" + obj.billStatus + "</td>" +
+							"<td><button class='payBill' disabled>Pay</button></td>" +
+							"</tr>");
+					} else {
+						$allBillsTBody.append("" +
+							"<tr>" +
+							"<td>" + ++i + "<input type='hidden' id='billId' value=" + obj.id + "></td>" +
+							"<td>" + obj.billingDate + "</td>" +
+							"<td>" + obj.connection.supplier.name + "</td>" +
+							"<td>" + obj.connection.connectionNumber + "</td>" +
+							"<td>" + obj.amount + "</td>" +
+							"<td id='billStatus'>" + obj.billStatus + "</td>" +
+							"<td><button class='payBill'>Pay</button></td>" +
+							"</tr>");
+					}
 				});
 			})
 		});
@@ -227,8 +245,14 @@ $(document).ready(function () {
 			url: 'bill/payBill/' + billId,
 			type: "PUT",
 			success: $.proxy(function (data) {
+				var $payBillModal = $('#payBillModal');
+				$payBillModal.show();
 				if (data == 'AMOUNT_INSUFFICIENT') {
-
+					$payBillModal.find('#payBillMessage').text('You do not have sufficient balance in your wallet.');
+				} else {
+					$billRow.prop('disabled', true);
+					$billRow.parent().parent().find('td#billStatus').text('Paid');
+					$payBillModal.find('#payBillMessage').text('Bill paid successfully.');
 				}
 			})
 		});

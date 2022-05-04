@@ -23,3 +23,13 @@
 		<%@include file="allBillsByUser.jsp" %>
 	</div>
 </div>
+
+<div id="payBillModal" class="modal">
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span id="closePayBillModal" class="close">&times;</span>
+		<div>
+			<span id="payBillMessage"></span>
+		</div>
+	</div>
+</div>
