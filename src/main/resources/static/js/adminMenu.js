@@ -1,31 +1,30 @@
 $(document).ready(function () {
-	$('#allUsersDiv').hide();
+	$('#allUsersGenerateBillDiv').hide();
 	$('#generateBillDiv').hide();
 	$("#datepicker").datepicker({minDate: 0, maxDate: "+1M"});
-	clickOnUsersBtn();
+	clickOnAllUsersGenerateBillBtn();
 	var connectionsList = [];
 
-	$('#usersBtn').on('click', function () {
-		$('#usersBtn').addClass('active');
-		$('#saveBillBtn').removeClass('active');
-		$('#logoutBtn').removeClass('active');
-		clickOnUsersBtn();
-	});
 	$('#generateBillBtn').on('click', function () {
-		$('#allUsersDiv').hide();
-		$('#generateBillDiv').show();
-	});
-	$('#saveBillBtn').on('click', function () {
-		$('#usersBtn').removeClass('active');
-		$('#saveBillBtn').addClass('active');
+		$('#generateBillBtn').addClass('active');
+		$('#allUsersBillsBtn').removeClass('active');
 		$('#logoutBtn').removeClass('active');
-		saveGeneratedBill();
+		clickOnAllUsersGenerateBillBtn();
+	});
+	$('#allUsersBillsBtn').on('click', function () {
+		$('#allUsersBillsBtn').addClass('active');
+		$('#generateBillBtn').removeClass('active');
+		$('#logoutBtn').removeClass('active');
+		$('#allUsersGenerateBillDiv').hide();
 	});
 	$('#logoutBtn').on('click', function () {
-		$('#usersBtn').removeClass('active');
+		$('#generateBillBtn').removeClass('active');
 		$('#saveBillBtn').removeClass('active');
 		$('#logoutBtn').addClass('active');
 		logout();
+	});
+	$('#saveBillBtn').on('click', function () {
+		saveGeneratedBill();
 	});
 
 	$('#myModal').find('#connectionType').on('change', function () {
@@ -38,8 +37,8 @@ $(document).ready(function () {
 		setSupplierNameByConnectionNumber(connectionNumber);
 	});
 
-	function clickOnUsersBtn() {
-		$('#allUsersDiv').show();
+	function clickOnAllUsersGenerateBillBtn() {
+		$('#allUsersGenerateBillDiv').show();
 		$('#generateBillDiv').hide();
 		getAllUsers();
 		$(document).on('click', '#addCustomerBill', function (event) {
@@ -49,6 +48,7 @@ $(document).ready(function () {
 			getDataForGenerateBill($selectedUser, event);
 		});
 		$(document).on('click', '#closeModal', function () {
+			resetGenerateBillModal();
 			$('#myModal').hide();
 		});
 		$(document).on('click', '#closeErrorModal', function () {
@@ -64,8 +64,6 @@ $(document).ready(function () {
 			url: 'user/allUsers',
 			type: "GET",
 			success: $.proxy(function (data) {
-				console.log('data: ' + data);
-				var jsonObject = JSON.stringify(data);
 				$.each(data, function (i, obj) {
 					usersTBody.append("<tr>" +
 						"<td>" + ++i + "<input type='hidden' id='userId' value=" + obj.id + "></td>" +
@@ -85,11 +83,7 @@ $(document).ready(function () {
 
 		var selectedUserId = $selectedUser.closest('tr').find('input:hidden').val()
 		var $modal = $('#myModal');
-		$modal.find('#connectionType').empty();
-		$modal.find('#connectionNumber').empty();
-		$modal.find('#supplierName').val('');
-		$modal.find('#datepicker').val('');
-		$modal.find('#payableAmount').val('');
+		resetGenerateBillModal();
 		$('#generateBillDiv').show();
 		$.ajax({
 			url: 'bill/generateBill/' + selectedUserId,
@@ -119,6 +113,17 @@ $(document).ready(function () {
 			})
 		});
 	};
+
+	function resetGenerateBillModal() {
+
+		var $modal = $('#myModal');
+		$modal.find('#connectionType').empty();
+		$modal.find('#connectionNumber').empty();
+		$modal.find('#supplierName').val('');
+		$modal.find('#dueDays').val('');
+		$modal.find('#datepicker').val('');
+		$modal.find('#payableAmount').val('');
+	}
 
 	function saveGeneratedBill() {
 		var $modal = $('#myModal');
@@ -154,7 +159,6 @@ $(document).ready(function () {
 		$.each(connectionsList, function (i, obj) {
 
 			if (connectionType.toUpperCase() == obj.connectionType.toUpperCase()) {
-
 				setSupplierNameByConnectionNumber(obj.connectionNumber);
 				return false;
 			}
@@ -167,7 +171,6 @@ $(document).ready(function () {
 		var $supplierName = $('#myModal').find('#supplierName');
 		$supplierName.val('');
 		$.each(connectionsList, function (i, obj) {
-
 			if (connectionNumber == obj.connectionNumber) {
 				$('#myModal').find('#connectionId').val(obj.id);
 				$supplierName.val(obj.supplier.name);

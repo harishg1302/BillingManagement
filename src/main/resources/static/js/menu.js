@@ -54,6 +54,10 @@ $(document).ready(function () {
 		saveConnection();
 	});
 
+	$('#connectionNumber').on('keyup', function () {
+		$('#mobileNumberErrorSpan').hide();
+	});
+
 	$('.allBillingBtn').on('click', function (e) {
 		e.stopImmediatePropagation();
 		e.preventDefault();
@@ -125,24 +129,56 @@ $(document).ready(function () {
 		});
 	};
 
+	function mobileValidation() {
+		var mobile = $('#connectionNumber').val();
+
+		if (mobile.length < 10) {
+			$('#mobileNumberErrorSpan').text('Invalid mobile number');
+			$('#mobileNumberErrorSpan').show();
+			return false;
+		} else {
+			$('#mobileNumberErrorSpan').hide();
+			return true;
+		}
+	}
+
 	function saveConnection() {
 
 		var connectionType = $('#connectionType').val().toUpperCase();
 		var connectionNumber = $('#connectionNumber').val();
 		var supplierId = $('#suppliers').val();
 
-		$.ajax({
-			url: 'bill/saveConnection?connectionType=' + connectionType + "&connectionNumber=" + connectionNumber + "&supplierId=" + supplierId,
-			type: "GET",
-			success: $.proxy(function (data) {
-				resetConnectionDiv();
-				getAllConnectionsByUser();
-			})
-		});
+		var isMobileNumberValid = mobileValidation();
+		if (isMobileNumberValid) {
+			$.ajax({
+				url: 'bill/saveConnection?connectionType=' + connectionType + "&connectionNumber=" + connectionNumber + "&supplierId=" + supplierId,
+				type: "GET",
+				success: function (data, textStatus, xhr) {
+					console.log('status : ' + xhr.status);
+					if (xhr.status == 200) {
+						resetConnectionDiv();
+						getAllConnectionsByUser();
+					} else if (xhr.status == 226) {
+						$('#mobileNumberErrorSpan').text('Mobile number is already in used.');
+						$('#mobileNumberErrorSpan').show();
+					} else {
+						console.log('Some error occurred');
+					}
+				},
+				error: function (data, textStatus, xhr) {
+					console.log('data error : ' + data.responseText);
+				}
+			});
+		}
 	};
 
 	function getSuppliersListByType(connectionType) {
 
+		if (connectionType.toUpperCase() == 'MOBILE') {
+			$('#connectionNumberDiv').show();
+		} else {
+			$('#connectionNumberDiv').hide();
+		}
 		var $suppliers = $('#suppliers');
 		$suppliers.empty();
 		$.ajax({
@@ -164,6 +200,8 @@ $(document).ready(function () {
 		$('#connectionType').val('0');
 		$('#suppliers').val('');
 		$('#connectionNumber').val('');
+		$('#mobileNumberErrorSpan').hide();
+		$('#connectionNumberDiv').hide();
 	}
 
 	function getAllConnectionsByUser() {
@@ -212,12 +250,12 @@ $(document).ready(function () {
 							"<tr>" +
 							"<td>" + ++i + "<input type='hidden' id='billId' value=" + obj.id + "></td>" +
 							"<td>" + obj.billingDate + "</td>" +
-							"<td>" + obj.billingDate + "</td>" +
+							"<td>" + obj.dueDate + "</td>" +
 							"<td>" + obj.connection.supplier.name + "</td>" +
 							"<td>" + obj.connection.connectionNumber + "</td>" +
 							"<td>" + obj.amount + "</td>" +
-							"<td>" + obj.amount + "</td>" +
-							"<td>" + obj.amount + "</td>" +
+							"<td>" + obj.lateFee + "</td>" +
+							"<td>" + obj.totalAmount + "</td>" +
 							"<td id='billStatus'>" + obj.billStatus + "</td>" +
 							"<td><button class='payBill' disabled>Pay</button></td>" +
 							"</tr>");
@@ -226,9 +264,12 @@ $(document).ready(function () {
 							"<tr>" +
 							"<td>" + ++i + "<input type='hidden' id='billId' value=" + obj.id + "></td>" +
 							"<td>" + obj.billingDate + "</td>" +
+							"<td>" + obj.dueDate + "</td>" +
 							"<td>" + obj.connection.supplier.name + "</td>" +
 							"<td>" + obj.connection.connectionNumber + "</td>" +
 							"<td>" + obj.amount + "</td>" +
+							"<td>" + obj.lateFee + "</td>" +
+							"<td>" + obj.totalAmount + "</td>" +
 							"<td id='billStatus'>" + obj.billStatus + "</td>" +
 							"<td><button class='payBill'>Pay</button></td>" +
 							"</tr>");

@@ -16,9 +16,11 @@
 			<h6><span class="connection">Suppliers</span></h6>
 			<select id="suppliers"></select>
 		</div>
-		<div>
-			<h6><span class="connection">Connection Number</span></h6>
-			<input type="text" id="connectionNumber">
+		<div id="connectionNumberDiv" style="display: none;">
+			<h6><span class="connection">Mobile Number</span></h6>
+			<input type="text" id="connectionNumber" maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+			<br/>
+			<span id="mobileNumberErrorSpan" class="error" style="display: none;"></span>
 		</div>
 		<div>
 			<button id="addConnection">Add Connection</button>
