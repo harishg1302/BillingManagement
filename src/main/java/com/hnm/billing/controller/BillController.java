@@ -108,7 +108,7 @@ public class BillController {
            billList.forEach(bill->{
                LocalDate dueDate = LocalDate.parse(bill.getDueDate(), formatter);
                if(today.compareTo(dueDate) > 0){
-                   bill.setLateFee(bill.getAmount() * (5/100));
+                   bill.setLateFee((bill.getAmount() * 5) /100);
                }
                bill.setTotalAmount(bill.getAmount() + bill.getLateFee());
            });
