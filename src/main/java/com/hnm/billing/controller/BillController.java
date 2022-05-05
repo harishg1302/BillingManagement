@@ -122,7 +122,19 @@ public class BillController {
     @GetMapping("/allBills")
     @ResponseBody
     public List<BillDTO> getAllBills(){
-        return billService.getAllBills();
+        List<BillDTO> bills = billService.getAllBills();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate today = LocalDate.now();
+        bills.forEach(bill->{
+            if(bill.getBillStatus().name().equalsIgnoreCase(BillStatus.PENDING.name())) {
+                LocalDate dueDate = LocalDate.parse(bill.getDueDate(), formatter);
+                if (today.compareTo(dueDate) > 0) {
+                    bill.setLateFee((bill.getAmount() * 5) / 100);
+                }
+                bill.setTotalAmount(bill.getAmount() + bill.getLateFee());
+            }
+        });
+        return bills;
     }
 
 
