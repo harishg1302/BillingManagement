@@ -30,6 +30,10 @@
 				<input type="text" id="datepicker">
 			</div>
 			<div>
+				<h6 class="modalh6">Due Days</h6>
+				<input type="text" id="dueDays">
+			</div>
+			<div>
 				<h6 class="modalh6">Amount</h6>
 				<input type="text" id="payableAmount">
 			</div>

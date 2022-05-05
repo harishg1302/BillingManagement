@@ -124,10 +124,11 @@ $(document).ready(function () {
 		var $modal = $('#myModal');
 		var customerId = $modal.find('#customerId').val();
 		var billingDate = $modal.find('#datepicker').val();
+		var dueDays = $modal.find('#dueDays').val();
 		var connectionId = $modal.find('#connectionId').val();
 		var payableAmount = $modal.find('#payableAmount').val();
 		$.ajax({
-			url: 'bill/saveBill?userId=' + customerId + "&billingDate=" + billingDate + "&connectionId=" + connectionId + "&amount=" + payableAmount,
+			url: 'bill/saveBill?userId=' + customerId + "&billingDate=" + billingDate + "&connectionId=" + connectionId + "&amount=" + payableAmount + "&dueDays=" + dueDays,
 			type: "GET",
 			contentType: 'application/json',
 			success: $.proxy(function (data) {

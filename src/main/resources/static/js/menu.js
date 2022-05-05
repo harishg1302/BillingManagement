@@ -212,8 +212,11 @@ $(document).ready(function () {
 							"<tr>" +
 							"<td>" + ++i + "<input type='hidden' id='billId' value=" + obj.id + "></td>" +
 							"<td>" + obj.billingDate + "</td>" +
+							"<td>" + obj.billingDate + "</td>" +
 							"<td>" + obj.connection.supplier.name + "</td>" +
 							"<td>" + obj.connection.connectionNumber + "</td>" +
+							"<td>" + obj.amount + "</td>" +
+							"<td>" + obj.amount + "</td>" +
 							"<td>" + obj.amount + "</td>" +
 							"<td id='billStatus'>" + obj.billStatus + "</td>" +
 							"<td><button class='payBill' disabled>Pay</button></td>" +

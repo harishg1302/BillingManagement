@@ -23,6 +23,12 @@ $(document).ready(function () {
 				success: $.proxy(function (data) {
 					window.location.href = "login"
 				})
+				// success: function (data, textStatus, xhr) {
+				// 	console.log('status : ' + xhr.status);
+				// },
+				// error: function (data, textStatus, xhr) {
+				// 	console.log('data error : ' + data.responseText);
+				// }
 			});
 		}
 	};
