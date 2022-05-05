@@ -1,7 +1,8 @@
 $(document).ready(function () {
 	$('#allUsersGenerateBillDiv').hide();
 	$('#generateBillDiv').hide();
-	$("#datepicker").datepicker({minDate: 0, maxDate: "+1M"});
+	$("#datepicker").datepicker();
+	// $("#datepicker").datepicker({minDate: 0, maxDate: "+1M"});
 	clickOnAllUsersGenerateBillBtn();
 	var connectionsList = [];
 
@@ -137,6 +138,7 @@ $(document).ready(function () {
 		$modal.find('#dueDays').val('');
 		$modal.find('#datepicker').val('');
 		$modal.find('#payableAmount').val('');
+		$modal.find('#generateBillErrorSpan').hide();
 	}
 
 	function saveGeneratedBill() {
