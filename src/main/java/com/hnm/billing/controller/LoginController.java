@@ -48,4 +48,10 @@ public class LoginController {
 		session.invalidate();
 		return "login";
 	}
+
+	@GetMapping("/register")
+	public String register() {
+
+		return "register";
+	}
 }

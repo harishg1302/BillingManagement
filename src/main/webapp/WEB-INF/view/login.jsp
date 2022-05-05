@@ -14,27 +14,75 @@
 			border: 1px solid #7d7474;
 		}
 
+		.error {
+			color: red;
+		}
+
 	</style>
+	<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+
+		function emailValidation() {
+			var email = $('input[name=email]').val();
+			var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+
+			if (!pattern.test(email)) {
+				$('#emailErrorSpan').show();
+				return false;
+			} else {
+				$('#emailErrorSpan').hide();
+				return true;
+			}
+		}
+
+		function passwordValidation() {
+			var password = $('input[name=password]').val();
+			if (password.length == 0) {
+				$('#passwordErrorSpan').show();
+				return false;
+			} else {
+				$('#passwordErrorSpan').hide();
+				return true;
+			}
+		}
+
+		function validation() {
+			var isValidEmail = emailValidation();
+			var isValidPassword = passwordValidation();
+			if (isValidEmail && isValidPassword) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
 </head>
 <body>
 <center>
-<h1> Billing Management</h1>
-<h2> Login </h2>
-<form action="login" method="post">
-	<div>
+	<h1> Billing Management</h1>
+	<h2> Login </h2>
+	<form action="login" method="post" onsubmit="return validation()">
 		<div>
-			<input type="text" name="email" placeholder="User Id">
+			<div>
+				<input type="text" name="email" placeholder="Email">
+				<br/>
+				<span id="emailErrorSpan" class="error" style="display: none;">Invalid email</span>
+			</div>
+			<div>
+				<input type="password" name="password" placeholder="Password">
+				<br/>
+				<span id="passwordErrorSpan" class="error" style="display: none;">Invalid Password</span>
+			</div>
+			<div>
+				<input type="submit" value="Login">
+				<br/><br/>
+				<a href="register">Sign Up</a>
+			</div>
 		</div>
-		<div>
-			<input type="password" name="password" placeholder="Password">
-		</div>
-		<div>
-			<input type="submit" value="Login">
-			<br/><br/>
-			<a href="user/register">Sign Up</a>
-		</div>
-	</div>
-</form>
+	</form>
 </center>
+<%--<div id="register">--%>
+<%--<%@include file="register.jsp"%>--%>
+<%--</div>--%>
 </body>
 </html>

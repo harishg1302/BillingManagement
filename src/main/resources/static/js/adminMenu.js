@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	$('#allUsersDiv').hide();
 	$('#generateBillDiv').hide();
-	$("#datepicker").datepicker();
+	$("#datepicker").datepicker({minDate: 0, maxDate: "+1M"});
 	clickOnUsersBtn();
 	var connectionsList = [];
 
@@ -43,8 +43,8 @@ $(document).ready(function () {
 		$('#generateBillDiv').hide();
 		getAllUsers();
 		$(document).on('click', '#addCustomerBill', function (event) {
-		    event.stopImmediatePropagation();
-        	event.preventDefault();
+			event.stopImmediatePropagation();
+			event.preventDefault();
 			var $selectedUser = $(event.currentTarget);
 			getDataForGenerateBill($selectedUser, event);
 		});
@@ -80,8 +80,8 @@ $(document).ready(function () {
 
 	function getDataForGenerateBill($selectedUser, e) {
 
-	    e.stopImmediatePropagation();
-        e.preventDefault();
+		e.stopImmediatePropagation();
+		e.preventDefault();
 
 		var selectedUserId = $selectedUser.closest('tr').find('input:hidden').val()
 		var $modal = $('#myModal');
@@ -168,7 +168,7 @@ $(document).ready(function () {
 		$.each(connectionsList, function (i, obj) {
 
 			if (connectionNumber == obj.connectionNumber) {
-			$('#myModal').find('#connectionId').val(obj.id);
+				$('#myModal').find('#connectionId').val(obj.id);
 				$supplierName.val(obj.supplier.name);
 			}
 		});
