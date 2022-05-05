@@ -109,8 +109,8 @@ public class BillController {
                LocalDate dueDate = LocalDate.parse(bill.getDueDate(), formatter);
                if(today.compareTo(dueDate) > 0){
                    bill.setLateFee(bill.getAmount() * (5/100));
-                   bill.setTotalAmount(bill.getAmount() + bill.getLateFee());
                }
+               bill.setTotalAmount(bill.getAmount() + bill.getLateFee());
            });
            return billList;
         } else {
