@@ -22,6 +22,7 @@ public class Bill implements Serializable {
     @DBRef
     private Connection connection;
     private String billingDate;
+    private String dueDate;
     @Field(targetType = FieldType.STRING)
     private BillStatus billStatus;
     private double amount;
@@ -56,6 +57,14 @@ public class Bill implements Serializable {
 
     public void setBillingDate(String billingDate) {
         this.billingDate = billingDate;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 
     public BillStatus getBillStatus() {

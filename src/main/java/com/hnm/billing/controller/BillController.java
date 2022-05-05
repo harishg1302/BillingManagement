@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ public class BillController {
 
     @GetMapping("/saveBill")
     @ResponseBody
-    public Bill saveBill(@RequestParam String userId, @RequestParam String billingDate, @RequestParam String connectionId, @RequestParam String amount) throws ParseException {
+    public Bill saveBill(@RequestParam String userId, @RequestParam String billingDate, @RequestParam String connectionId, @RequestParam String amount, @RequestParam String dueDays) throws ParseException {
         Connection connection = billService.getConnectionById(Integer.valueOf(connectionId));
         Bill bill = new Bill();
         bill.setUserId(Integer.valueOf(userId));
@@ -45,6 +46,14 @@ public class BillController {
         bill.setAmount(Double.valueOf(amount));
         bill.setConnection(connection);
         return billService.saveBill(bill);
+    }
+
+    private String getDueDate(String billingDate, String dueDays){
+        int dueDaysInInt = Integer.parseInt(dueDays);
+        LocalDate date = LocalDate.parse(billingDate);
+        LocalDate dueDate = date.plusDays(dueDaysInInt);
+        return null;
+//        return dueDate.format(dd/mm/yyyy"")
     }
 
     @GetMapping("/getSuppliersByConnectionType/{connectionType}")
@@ -60,6 +69,7 @@ public class BillController {
         Connection connection = new Connection();
         connection.setUserId(currentUser.getId());
         connection.setConnectionType(ConnectionType.valueOf(connectionType).getDisplayName());
+        connection.setConnectionNumber(connectionNumber);
         connection.setStatus(true);
         try {
             Connection savedConnection = billService.saveConnection(connection, Long.parseLong(supplierId));
