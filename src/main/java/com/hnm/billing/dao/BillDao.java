@@ -17,4 +17,5 @@ public interface BillDao {
     List<Connection> getConnectionsByUserId(long userId);
     List<Bill> getBillsByUserIdAndConnectionType(long userId, String connectionType);
     String payBill(long billId, long lateFee);
+    List<Bill> getAllBills();
 }

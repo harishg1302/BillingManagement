@@ -118,6 +118,13 @@ public class BillController {
         }
     }
 
+    @GetMapping("/allBills")
+    @ResponseBody
+    public List<Bill> getAllBills(){
+        return billService.getAllBills();
+    }
+
+
     @PutMapping("/payBill/{billId}/{lateFee}")
     @ResponseBody
     public String payBill(@PathVariable long billId, @PathVariable long lateFee){

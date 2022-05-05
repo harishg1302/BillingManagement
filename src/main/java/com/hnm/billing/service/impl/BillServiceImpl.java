@@ -57,4 +57,9 @@ public class BillServiceImpl implements BillService {
         return billDao.payBill(billId, lateFee);
     }
 
+    @Override
+    public List<Bill> getAllBills() {
+        return billDao.getAllBills();
+    }
+
 }

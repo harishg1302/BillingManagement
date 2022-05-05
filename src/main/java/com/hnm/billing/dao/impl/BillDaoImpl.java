@@ -138,4 +138,9 @@ public class BillDaoImpl implements BillDao {
             return "AMOUNT_INSUFFICIENT";
         }
     }
+
+    @Override
+    public List<Bill> getAllBills() {
+        return mongoTemplate.findAll(Bill.class);
+    }
 }
