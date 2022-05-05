@@ -118,9 +118,9 @@ public class BillController {
         }
     }
 
-    @PutMapping("/payBill/{billId}")
+    @PutMapping("/payBill/{billId}/{lateFee}")
     @ResponseBody
-    public String payBill(@PathVariable long billId){
-       return billService.payBill(billId);
+    public String payBill(@PathVariable long billId, @PathVariable long lateFee){
+       return billService.payBill(billId, lateFee);
     }
 }

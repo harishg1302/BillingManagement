@@ -53,8 +53,8 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public String payBill(long billId) {
-        return billDao.payBill(billId);
+    public String payBill(long billId, long lateFee) {
+        return billDao.payBill(billId, lateFee);
     }
 
 }

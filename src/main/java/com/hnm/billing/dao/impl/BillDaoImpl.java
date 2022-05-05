@@ -106,23 +106,26 @@ public class BillDaoImpl implements BillDao {
     }
 
     @Override
-    public String payBill(long billId) {
+    public String payBill(long billId, long lateFee) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(billId));
         Bill bill = mongoTemplate.findOne(query, Bill.class);
-
+        bill.setLateFee(lateFee);
+        bill.setTotalAmount(bill.getAmount() + lateFee);
         Query query1 = new Query();
         query1.addCriteria(Criteria.where("userId").is(bill.getUserId()));
         Wallet wallet = mongoTemplate.findOne(query1, Wallet.class);
         if (wallet != null) {
-            if (wallet.getBalance() >= bill.getAmount()) {
+            if (wallet.getBalance() >= bill.getTotalAmount()) {
 
                 Update updateBillStatus = new Update();
                 updateBillStatus.set("billStatus", BillStatus.PAID);
+                updateBillStatus.set("lateFee", bill.getLateFee());
+                updateBillStatus.set("totalAmount", bill.getTotalAmount());
                 mongoTemplate.updateFirst(query, updateBillStatus, Bill.class);
 
                 Update updateWalletBalance = new Update();
-                double updatedBalance = wallet.getBalance() - bill.getAmount();
+                double updatedBalance = wallet.getBalance() - bill.getTotalAmount();
                 updateWalletBalance.set("balance", updatedBalance);
                 mongoTemplate.updateFirst(query1, updateWalletBalance, Wallet.class);
 
