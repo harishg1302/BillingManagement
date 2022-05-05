@@ -25,8 +25,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User saveUser(User user) {
-        user.setId(sequenceGeneratorService.generateSequence(User.SEQUENCE_NAME));
-        return mongoTemplate.save(user);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(user.getEmail()));
+        User savedUser = mongoTemplate.findOne(query, User.class);
+        if(savedUser != null){
+            throw new RuntimeException("USER_EXIST");
+        } else {
+            user.setId(sequenceGeneratorService.generateSequence(User.SEQUENCE_NAME));
+            return mongoTemplate.save(user);
+        }
     }
 
     @Override

@@ -4,7 +4,9 @@ import com.hnm.billing.model.Role;
 import com.hnm.billing.model.User;
 import com.hnm.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,13 +27,21 @@ public class UserController {
 
     @PostMapping(value = "/register", produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseBody
-    public String register(@RequestBody User user) {
+    public ResponseEntity<String> register(@RequestBody User user) {
 
         user.setPassword(Base64.getEncoder().encodeToString(user.getPassword().getBytes()));
         user.setRole(Role.CUSTOMER);
         user.setStatus(true);
-        User savedUser = userService.saveUser(user);
-        return "login";
+        try {
+            User savedUser = userService.saveUser(user);
+            return new ResponseEntity<>("login", HttpStatus.OK);
+        } catch(Exception ex) {
+            if(ex.getMessage().equalsIgnoreCase("USER_EXIST")){
+                return new ResponseEntity<>(null, HttpStatus.IM_USED);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.SERVICE_UNAVAILABLE);
+            }
+        }
     }
 
     @GetMapping("/getByEmailId/{emailId}")
