@@ -1,5 +1,6 @@
 package com.hnm.billing.controller;
 
+import com.hnm.billing.dto.BillDTO;
 import com.hnm.billing.dto.ConnectionDTO;
 import com.hnm.billing.model.Bill;
 import com.hnm.billing.model.BillStatus;
@@ -120,7 +121,7 @@ public class BillController {
 
     @GetMapping("/allBills")
     @ResponseBody
-    public List<Bill> getAllBills(){
+    public List<BillDTO> getAllBills(){
         return billService.getAllBills();
     }
 

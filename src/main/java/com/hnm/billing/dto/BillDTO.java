@@ -3,17 +3,18 @@ package com.hnm.billing.dto;
 import com.hnm.billing.model.BillStatus;
 import com.hnm.billing.model.Connection;
 
-import java.util.Date;
-
 public class BillDTO {
 
     private long id;
     private long userId;
+    private String email;
     private Connection connection;
-    private long connectionId;
-    private Date billingDate;
+    private String billingDate;
+    private String dueDate;
     private BillStatus billStatus;
     private double amount;
+    private double lateFee;
+    private double totalAmount;
 
     public long getId() {
         return id;
@@ -31,12 +32,12 @@ public class BillDTO {
         this.userId = userId;
     }
 
-    public long getConnectionId() {
-        return connectionId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setConnectionId(long connectionId) {
-        this.connectionId = connectionId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Connection getConnection() {
@@ -47,12 +48,36 @@ public class BillDTO {
         this.connection = connection;
     }
 
-    public Date getBillingDate() {
+    public String getBillingDate() {
         return billingDate;
     }
 
-    public void setBillingDate(Date billingDate) {
+    public void setBillingDate(String billingDate) {
         this.billingDate = billingDate;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public double getLateFee() {
+        return lateFee;
+    }
+
+    public void setLateFee(double lateFee) {
+        this.lateFee = lateFee;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public BillStatus getBillStatus() {

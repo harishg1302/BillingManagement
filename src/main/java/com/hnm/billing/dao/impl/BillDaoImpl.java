@@ -143,4 +143,9 @@ public class BillDaoImpl implements BillDao {
     public List<Bill> getAllBills() {
         return mongoTemplate.findAll(Bill.class);
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        return mongoTemplate.findAll(User.class);
+    }
 }

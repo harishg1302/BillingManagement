@@ -1,5 +1,6 @@
 package com.hnm.billing.service;
 
+import com.hnm.billing.dto.BillDTO;
 import com.hnm.billing.dto.ConnectionDTO;
 import com.hnm.billing.model.Bill;
 import com.hnm.billing.model.Connection;
@@ -16,5 +17,5 @@ public interface BillService {
     List<Connection> getConnectionsByUserId(long userId);
     List<Bill> getBillsByUserIdAndConnectionType(long userId, String connectionType);
     String payBill(long billId, long lateFee);
-    List<Bill> getAllBills();
+    List<BillDTO> getAllBills();
 }
