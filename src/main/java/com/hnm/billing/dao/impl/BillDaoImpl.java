@@ -64,6 +64,18 @@ public class BillDaoImpl implements BillDao {
 
     @Override
     public Connection saveConnection(Connection connection, long supplierId) {
+        if(connection.getConnectionType().equalsIgnoreCase(ConnectionType.MOBILE.getDisplayName())) {
+            Query query = new Query();
+            query.addCriteria(Criteria.where("connectionNumber").is(connection.getConnectionNumber()));
+            Connection existingConnection = mongoTemplate.findOne(query, Connection.class);
+            if(existingConnection != null){
+                throw new RuntimeException("DUPLICATE_CONNECTION");
+            }
+        } else{
+            long connectionSequence = sequenceGeneratorService.generateConnectionNumber("connection_number_generator");
+            String connectionNumber = connection.getConnectionType()+connectionSequence;
+            connection.setConnectionNumber(connectionNumber);
+        }
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(supplierId));
         Supplier supplier = mongoTemplate.findOne(query, Supplier.class);

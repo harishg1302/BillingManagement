@@ -9,6 +9,8 @@ import com.hnm.billing.model.Supplier;
 import com.hnm.billing.model.User;
 import com.hnm.billing.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,14 +55,22 @@ public class BillController {
 
     @GetMapping("/saveConnection")
     @ResponseBody
-    public Connection saveConnection(@RequestParam String connectionType, @RequestParam String connectionNumber, @RequestParam String supplierId, HttpSession session){
+    public ResponseEntity<Connection> saveConnection(@RequestParam String connectionType, @RequestParam String connectionNumber, @RequestParam String supplierId, HttpSession session){
         User currentUser = (User) session.getAttribute("user");
         Connection connection = new Connection();
         connection.setUserId(currentUser.getId());
         connection.setConnectionType(ConnectionType.valueOf(connectionType).getDisplayName());
         connection.setStatus(true);
-        connection.setConnectionNumber(connectionNumber);
-        return billService.saveConnection(connection, Long.parseLong(supplierId));
+        try {
+            Connection savedConnection = billService.saveConnection(connection, Long.parseLong(supplierId));
+            return new ResponseEntity<>(savedConnection, HttpStatus.OK);
+        } catch(Exception ex){
+            if(ex.getMessage().equalsIgnoreCase("DUPLICATE_CONNECTION")){
+                return new ResponseEntity<>(null, HttpStatus.IM_USED);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.SERVICE_UNAVAILABLE);
+            }
+        }
     }
 
     @GetMapping("/getConnectionsByUserId")
