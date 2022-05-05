@@ -9,8 +9,8 @@
 <body>
 <div class="float-container">
 	<div class="topnav">
-		<a class="active" id="usersBtn" href="#home">Users</a>
-		<a id="generateBillBtn" href="#bills">Generate Bill</a>
+		<a class="active" id="usersBtn" href="#home">Generate Bill</a>
+		<a id="generateBillBtn" href="#bills" style="display: none;">Generate Bill</a>
 		<a id="logoutBtn" href="#logOut">Log out</a>
 	</div>
 	<div id="allUsersDiv" class="float-child" style="display: none;">

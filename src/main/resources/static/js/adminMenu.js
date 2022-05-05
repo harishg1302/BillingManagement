@@ -43,8 +43,10 @@ $(document).ready(function () {
 		$('#generateBillDiv').hide();
 		getAllUsers();
 		$(document).on('click', '#addCustomerBill', function (event) {
+		    event.stopImmediatePropagation();
+        	event.preventDefault();
 			var $selectedUser = $(event.currentTarget);
-			getDataForGenerateBill($selectedUser);
+			getDataForGenerateBill($selectedUser, event);
 		});
 		$(document).on('click', '#closeModal', function () {
 			$('#myModal').hide();
@@ -76,7 +78,10 @@ $(document).ready(function () {
 		});
 	};
 
-	function getDataForGenerateBill($selectedUser) {
+	function getDataForGenerateBill($selectedUser, e) {
+
+	    e.stopImmediatePropagation();
+        e.preventDefault();
 
 		var selectedUserId = $selectedUser.closest('tr').find('input:hidden').val()
 		var $modal = $('#myModal');
@@ -138,7 +143,6 @@ $(document).ready(function () {
 		$.each(connectionsList, function (i, obj) {
 
 			if (connectionType.toUpperCase() == obj.connectionType.toUpperCase()) {
-				$('#myModal').find('#connectionId').val(obj.id);
 				$connectionNumbers.append($('<option>', {
 					value: obj.connectionNumber,
 					text: obj.connectionNumber
@@ -149,6 +153,7 @@ $(document).ready(function () {
 		$.each(connectionsList, function (i, obj) {
 
 			if (connectionType.toUpperCase() == obj.connectionType.toUpperCase()) {
+
 				setSupplierNameByConnectionNumber(obj.connectionNumber);
 				return false;
 			}
@@ -163,6 +168,7 @@ $(document).ready(function () {
 		$.each(connectionsList, function (i, obj) {
 
 			if (connectionNumber == obj.connectionNumber) {
+			$('#myModal').find('#connectionId').val(obj.id);
 				$supplierName.val(obj.supplier.name);
 			}
 		});
