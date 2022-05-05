@@ -63,9 +63,9 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<BillDTO> getAllBills() {
+    public List<BillDTO> getAllBills(String connectionType, String billStatus) {
         List<User> users = billDao.getAllUsers();
-        List<Bill> bills = billDao.getAllBills();
+        List<Bill> bills = billDao.getAllBills(connectionType, billStatus);
         List<BillDTO> billDTOS = new ArrayList<>(bills.size());
         if(!CollectionUtils.isEmpty(users) && !CollectionUtils.isEmpty(bills)) {
             bills.forEach(bill -> {

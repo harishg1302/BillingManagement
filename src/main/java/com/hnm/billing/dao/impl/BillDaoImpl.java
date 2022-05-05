@@ -11,7 +11,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -140,8 +142,36 @@ public class BillDaoImpl implements BillDao {
     }
 
     @Override
-    public List<Bill> getAllBills() {
-        return mongoTemplate.findAll(Bill.class);
+    public List<Bill> getAllBills(String connectionType, String billStatus) {
+        List<Bill> billList = new ArrayList<>();
+        if(isNotBlank(connectionType) || isNotBlank(billStatus)){
+            if(isNotBlank(connectionType) && isNotBlank(billStatus)){
+                Query query = new Query();
+                query.addCriteria(Criteria.where("billStatus").is(billStatus));
+                List<Bill> billListWithStatus = mongoTemplate.find(query, Bill.class);
+                if(CollectionUtils.isEmpty(billListWithStatus))
+                billList = billListWithStatus.stream().filter(bill -> bill.getConnection().getConnectionType().equalsIgnoreCase(connectionType)).collect(Collectors.toList());
+            }
+            else if(isNotBlank(billStatus)) {
+                Query query = new Query();
+                query.addCriteria(Criteria.where("billStatus").is(billStatus));
+                billList = mongoTemplate.find(query, Bill.class);
+            } else {
+                List<Bill> allBills = mongoTemplate.findAll(Bill.class);
+                if(CollectionUtils.isEmpty(allBills))
+                    billList = allBills.stream().filter(bill -> bill.getConnection().getConnectionType().equalsIgnoreCase(connectionType)).collect(Collectors.toList());
+            }
+        } else {
+            billList = mongoTemplate.findAll(Bill.class);
+        }
+        return billList;
+    }
+
+    private boolean isNotBlank(String str){
+        if(str != null && !str.isEmpty())
+            return true;
+        else
+            return false;
     }
 
     @Override

@@ -121,8 +121,8 @@ public class BillController {
 
     @GetMapping("/allBills")
     @ResponseBody
-    public List<BillDTO> getAllBills(){
-        List<BillDTO> bills = billService.getAllBills();
+    public List<BillDTO> getAllBills(@RequestParam(required = false) String connectionType, @RequestParam(required = false) String billStatus){
+        List<BillDTO> bills = billService.getAllBills(connectionType, billStatus);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate today = LocalDate.now();
         bills.forEach(bill->{
