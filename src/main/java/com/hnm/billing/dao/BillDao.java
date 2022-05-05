@@ -17,7 +17,9 @@ public interface BillDao {
     Connection saveConnection(Connection connection, long supplierId);
     List<Connection> getConnectionsByUserId(long userId);
     List<Bill> getBillsByUserIdAndConnectionType(long userId, String connectionType);
-    String payBill(long billId, long lateFee);
+
+    String payBill(long billId, Double lateFee);
+
     List<Bill> getAllBills(String connectionType, String billStatus);
     List<User> getAllUsers();
 }

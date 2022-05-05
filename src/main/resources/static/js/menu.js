@@ -88,6 +88,7 @@ $(document).ready(function () {
 		$('#walletDiv').show();
 		$('#connectionsDiv').hide();
 		$('#billingDiv').hide();
+		$('#walletErrorSpan').hide();
 		$('#toBeAddedAmount').val('');
 		getWalletBalance();
 	}
@@ -234,6 +235,7 @@ $(document).ready(function () {
 		$('#connectionType').val('0');
 		$('#suppliers').val('');
 		$('#connectionNumber').val('');
+		$('#connectionTypeErrorSpan').hide();
 		$('#mobileNumberErrorSpan').hide();
 		$('#connectionNumberDiv').hide();
 	}
@@ -327,7 +329,7 @@ $(document).ready(function () {
 					$payBillModal.find('#payBillMessage').text('You do not have sufficient balance in your wallet.');
 				} else {
 					$billRow.prop('disabled', true);
-					$billRow.parent().parent().find('td#billStatus').text('Paid');
+					$billRow.parent().parent().find('td#billStatus').text('PAID');
 					$payBillModal.find('#payBillMessage').text('Bill paid successfully.');
 				}
 			})
