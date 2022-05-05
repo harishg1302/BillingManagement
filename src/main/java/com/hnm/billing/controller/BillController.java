@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -45,15 +46,17 @@ public class BillController {
         bill.setBillingDate(billingDate);
         bill.setAmount(Double.valueOf(amount));
         bill.setConnection(connection);
+        bill.setDueDate(getDueDate(billingDate, dueDays));
         return billService.saveBill(bill);
     }
 
     private String getDueDate(String billingDate, String dueDays){
         int dueDaysInInt = Integer.parseInt(dueDays);
-        LocalDate date = LocalDate.parse(billingDate);
-        LocalDate dueDate = date.plusDays(dueDaysInInt);
-        return null;
-//        return dueDate.format(dd/mm/yyyy"")
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate localDate = LocalDate.parse(billingDate, formatter);
+        LocalDate dueDate = localDate.plusDays(dueDaysInInt);
+        String dueDateInString = dueDate.format(formatter);
+        return dueDateInString;
     }
 
     @GetMapping("/getSuppliersByConnectionType/{connectionType}")
@@ -99,7 +102,17 @@ public class BillController {
     public List<Bill> getBillsByUserIdAndConnectionType(@PathVariable String connectionType, HttpSession session){
         User currentUser = (User) session.getAttribute("user");
         if(currentUser != null){
-           return billService.getBillsByUserIdAndConnectionType(currentUser.getId(), connectionType);
+           List<Bill> billList = billService.getBillsByUserIdAndConnectionType(currentUser.getId(), connectionType);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            LocalDate today = LocalDate.now();
+           billList.forEach(bill->{
+               LocalDate dueDate = LocalDate.parse(bill.getDueDate(), formatter);
+               if(today.compareTo(dueDate) > 0){
+                   bill.setLateFee(bill.getAmount() * (5/100));
+                   bill.setTotalAmount(bill.getAmount() + bill.getLateFee());
+               }
+           });
+           return billList;
         } else {
             return null;
         }

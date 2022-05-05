@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Document
 public class Bill implements Serializable {
@@ -26,6 +25,8 @@ public class Bill implements Serializable {
     @Field(targetType = FieldType.STRING)
     private BillStatus billStatus;
     private double amount;
+    private double lateFee;
+    private double totalAmount;
 
     public long getId() {
         return id;
@@ -81,5 +82,21 @@ public class Bill implements Serializable {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public double getLateFee() {
+        return lateFee;
+    }
+
+    public void setLateFee(double lateFee) {
+        this.lateFee = lateFee;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }
