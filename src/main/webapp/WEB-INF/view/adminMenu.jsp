@@ -16,6 +16,9 @@
 	<div id="allUsersGenerateBillDiv" class="float-child" style="display: none;">
 		<%@include file="allUsers.jsp" %>
 	</div>
+	<div id="allUsersBillsDiv" class="float-child" style="display: none;">
+		<%@include file="allUsersBills.jsp" %>
+	</div>
 	<div id="generateBillDiv" class="float-child" style="display: none;">
 		<%@include file="generateBill.jsp" %>
 	</div>

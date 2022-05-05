@@ -11,6 +11,8 @@
 				<option value="WIFI">WiFi</option>
 				<option value="GAS">Gas</option>
 			</select>
+			<br/>
+			<span id="connectionTypeErrorSpan" class="error" style="display: none;"></span>
 		</div>
 		<div>
 			<h6><span class="connection">Suppliers</span></h6>

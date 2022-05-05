@@ -1,4 +1,3 @@
-<%--<div id="navBar1">--%>
 <div id="navBar">
 	<div id="subDiv1">
 		<button id="dthBtn" class="allBillingBtn">DTH</button>
@@ -21,8 +20,7 @@
 </div>
 <div id="allBillsDiv" class="child">
 	<%@include file="allBillsByUser.jsp" %>
-	</div>
-<%--</div>--%>
+</div>
 
 <div id="payBillModal" class="modal">
 	<!-- Modal content -->

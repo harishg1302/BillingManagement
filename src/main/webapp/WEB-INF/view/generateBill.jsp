@@ -10,6 +10,8 @@
 		<span id="closeModal" class="close">&times;</span>
 		<div>
 			<label>Customer Email Id: <span id="customerEmailId"></span><input type="hidden" id="customerId"></label>
+			<br/>
+			<span id="generateBillErrorSpan" class="error" style="display: none;">All Fields are mandatory</span>
 		</div>
 		<form id="saveBillForm">
 			<div>

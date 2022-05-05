@@ -16,6 +16,7 @@
 
 		.error {
 			color: red;
+			font-size: 11px;
 		}
 
 	</style>
@@ -81,8 +82,5 @@
 		</div>
 	</form>
 </center>
-<%--<div id="register">--%>
-<%--<%@include file="register.jsp"%>--%>
-<%--</div>--%>
 </body>
 </html>

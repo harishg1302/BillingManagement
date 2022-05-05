@@ -6,6 +6,7 @@ body {
 .topnav {
 	overflow: hidden;
 	background-color: #333;
+	cursor: pointer;
 }
 
 .topnav a {
@@ -169,17 +170,13 @@ button.active {
 }
 
 .parent {
-	/*border: 1px solid black;*/
 	margin: 1rem;
 	padding: 2rem 2rem;
-	/*text-align: center;*/
 }
 
 .child {
 	display: inline-block;
-	/*border: 1px solid red;*/
 	padding: 1rem 1rem;
-	/*vertical-align: middle;*/
 }
 
 #addConnectionDiv {
@@ -236,4 +233,11 @@ button:disabled:hover:active {
 
 .error {
 	color: red;
+	font-size: 11px;
+}
+
+.allUsersBillsConnectionType {
+	margin: 5px 0px 10px 5px;
+	width: 38%;
+	display: inline-block;
 }

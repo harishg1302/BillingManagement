@@ -58,6 +58,14 @@ $(document).ready(function () {
 		$('#mobileNumberErrorSpan').hide();
 	});
 
+	$('#toBeAddedAmount').on('keyup', function () {
+		$('#walletErrorSpan').hide();
+	});
+
+	$('#connectionType').on('change', function () {
+		connectionTypeValidation($(this).val());
+	});
+
 	$('.allBillingBtn').on('click', function (e) {
 		e.stopImmediatePropagation();
 		e.preventDefault();
@@ -80,6 +88,7 @@ $(document).ready(function () {
 		$('#walletDiv').show();
 		$('#connectionsDiv').hide();
 		$('#billingDiv').hide();
+		$('#toBeAddedAmount').val('');
 		getWalletBalance();
 	}
 
@@ -108,31 +117,55 @@ $(document).ready(function () {
 		});
 	};
 
+	function isValidAmount(toBeAddedBalance) {
+		if (toBeAddedBalance.length == 0) {
+			$('#walletErrorSpan').show();
+			return false;
+		} else {
+			$('#walletErrorSpan').hide();
+			return true;
+		}
+	}
+
 	function updateWalletBalance() {
 
 		var currentBalance = $('#currentBalance').text();
-		var toBeAddedBalance = parseInt($('#toBeAddedAmount').val());
+		var toBeAddedBalance = $('#toBeAddedAmount').val();
 
-		var totalBalance = 0;
-		if ($.isNumeric(currentBalance)) {
-			totalBalance = parseInt(currentBalance) + toBeAddedBalance;
-		} else {
-			totalBalance = toBeAddedBalance;
+		var isValidWalletForm = isValidAmount(toBeAddedBalance)
+		if (isValidWalletForm) {
+			var totalBalance = 0;
+			if ($.isNumeric(currentBalance)) {
+				totalBalance = parseInt(currentBalance) + parseInt(toBeAddedBalance);
+			} else {
+				totalBalance = parseInt(toBeAddedBalance);
+			}
+			$.ajax({
+				url: 'wallet/updateBalance/' + totalBalance,
+				type: "PUT",
+				success: $.proxy(function (data) {
+					$('#currentBalance').text(data.balance);
+					$('#toBeAddedAmount').val('');
+				})
+			});
 		}
-		$.ajax({
-			url: 'wallet/updateBalance/' + totalBalance,
-			type: "PUT",
-			success: $.proxy(function (data) {
-				$('#currentBalance').text(data.balance);
-				$('#toBeAddedAmount').val('');
-			})
-		});
 	};
 
-	function mobileValidation() {
-		var mobile = $('#connectionNumber').val();
+	function connectionTypeValidation(connectionType) {
 
-		if (mobile.length < 10) {
+		if (connectionType == 0) {
+			$('#connectionTypeErrorSpan').text('Invalid connection type');
+			$('#connectionTypeErrorSpan').show();
+			return false;
+		} else {
+			$('#connectionTypeErrorSpan').hide();
+			return true;
+		}
+	}
+
+	function mobileValidation(mobile, connectionType) {
+
+		if (connectionType == 'MOBILE' && mobile.length < 10) {
 			$('#mobileNumberErrorSpan').text('Invalid mobile number');
 			$('#mobileNumberErrorSpan').show();
 			return false;
@@ -148,8 +181,9 @@ $(document).ready(function () {
 		var connectionNumber = $('#connectionNumber').val();
 		var supplierId = $('#suppliers').val();
 
-		var isMobileNumberValid = mobileValidation();
-		if (isMobileNumberValid) {
+		var isConnectionTypeValid = connectionTypeValidation(connectionType);
+		var isMobileNumberValid = mobileValidation(connectionNumber, connectionType);
+		if (isConnectionTypeValid && isMobileNumberValid) {
 			$.ajax({
 				url: 'bill/saveConnection?connectionType=' + connectionType + "&connectionNumber=" + connectionNumber + "&supplierId=" + supplierId,
 				type: "GET",
@@ -212,7 +246,6 @@ $(document).ready(function () {
 			url: 'bill/getConnectionsByUserId',
 			type: "GET",
 			success: $.proxy(function (data) {
-				var jsonObject = JSON.stringify(data);
 				$.each(data, function (i, obj) {
 					$connectionsTBody.append("" +
 						"<tr>" +
@@ -242,9 +275,7 @@ $(document).ready(function () {
 			url: 'bill/getBillsByUserIdAndConnectionType/' + connectionType,
 			type: "GET",
 			success: $.proxy(function (data) {
-				var jsonObject = JSON.stringify(data);
 				$.each(data, function (i, obj) {
-
 					if (obj.billStatus == 'PAID') {
 						$allBillsTBody.append("" +
 							"<tr>" +
@@ -254,7 +285,7 @@ $(document).ready(function () {
 							"<td>" + obj.connection.supplier.name + "</td>" +
 							"<td>" + obj.connection.connectionNumber + "</td>" +
 							"<td>" + obj.amount + "</td>" +
-							"<td>" + obj.lateFee + "</td>" +
+							"<td id='lateFees'>" + obj.lateFee + "</td>" +
 							"<td>" + obj.totalAmount + "</td>" +
 							"<td id='billStatus'>" + obj.billStatus + "</td>" +
 							"<td><button class='payBill' disabled>Pay</button></td>" +
@@ -268,7 +299,7 @@ $(document).ready(function () {
 							"<td>" + obj.connection.supplier.name + "</td>" +
 							"<td>" + obj.connection.connectionNumber + "</td>" +
 							"<td>" + obj.amount + "</td>" +
-							"<td>" + obj.lateFee + "</td>" +
+							"<td id='lateFees'>" + obj.lateFee + "</td>" +
 							"<td>" + obj.totalAmount + "</td>" +
 							"<td id='billStatus'>" + obj.billStatus + "</td>" +
 							"<td><button class='payBill'>Pay</button></td>" +
@@ -285,8 +316,9 @@ $(document).ready(function () {
 		e.preventDefault();
 
 		var billId = $billRow.closest('tr').find('input:hidden').val()
+		var lateFees = $billRow.closest('tr').find('#lateFees').text()
 		$.ajax({
-			url: 'bill/payBill/' + billId,
+			url: 'bill/payBill/' + billId + '/' + lateFees,
 			type: "PUT",
 			success: $.proxy(function (data) {
 				var $payBillModal = $('#payBillModal');
