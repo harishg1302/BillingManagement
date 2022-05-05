@@ -65,6 +65,8 @@
 	<form action="login" method="post" onsubmit="return validation()">
 		<div>
 			<div>
+				<span id="loginErrorSpan" class="error">${errorMessage}</span>
+				<br/>
 				<input type="text" name="email" placeholder="Email">
 				<br/>
 				<span id="emailErrorSpan" class="error" style="display: none;">Invalid email</span>

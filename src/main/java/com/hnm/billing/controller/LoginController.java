@@ -6,6 +6,7 @@ import com.hnm.billing.model.User;
 import com.hnm.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class LoginController {
 	}
 
 	@PostMapping({ "/login", "/user/login" })
-	public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session) {
+	public String login(@ModelAttribute LoginDTO loginDTO, HttpSession session, Model model) {
 
 		loginDTO.setPassword(Base64.getEncoder().encodeToString(loginDTO.getPassword().getBytes()));
 		User loggedInUser = userService.loginUser(loginDTO);
@@ -38,6 +39,7 @@ public class LoginController {
 				return "adminHome";
 			}
 		} else {
+			model.addAttribute("errorMessage", "UserId or password is incorrect");
 			return "login";
 		}
 	}

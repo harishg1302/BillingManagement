@@ -20,9 +20,19 @@ $(document).ready(function () {
 				type: "POST",
 				data: JSON.stringify(data),
 				contentType: "application/json",
-				success: $.proxy(function (data) {
-					window.location.href = "login"
-				})
+				success: function (data, textStatus, xhr) {
+					if (xhr.status == 200) {
+						window.location.href = "login"
+					} else if (xhr.status == 226) {
+						$('#emailErrorSpan').text('Email is already in used.');
+						$('#emailErrorSpan').show();
+					} else {
+						console.log('Some error occurred');
+					}
+				},
+				error: function (data, textStatus, xhr) {
+					console.log('data error : ' + data.responseText);
+				}
 			});
 		}
 	};
